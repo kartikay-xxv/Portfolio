@@ -3,9 +3,11 @@ import { dockApps } from "#constants/index.js";
 import { Tooltip } from "react-tooltip";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import useWindowStore from "#store/window.js";
 
 const Dock = () => {
     const dockRef = useRef(null);
+    const { openWindow, closeWindow, focusWindow } = useWindowStore();
 
     useGSAP( () => {
         const dock = dockRef.current;
@@ -13,17 +15,17 @@ const Dock = () => {
         
         const icons = dock.querySelectorAll(".dock-icon");
         
-        const animateIcons = (mouseX) => {
-            const { left } = dock.getBoundingClientRect();
+        const animateIcons = (mouseX, left) => {
+            const { left: dockLeft } = left;
             
             icons.forEach( (icon) => {
                 const { left: iconLeft, width } = icon.getBoundingClientRect();
-                const center = iconLeft - left + width / 2;
+                const center = iconLeft - dockLeft + width / 2;
                 const distance = Math.abs(mouseX - center);
                 const intensity = Math.exp(-(distance ** 2.5) / 20000);
                 
                 gsap.to(icon, {
-                    scale: 1 + 0.25 * intensity,
+                    scale: 1 + 0.35 * intensity,
                     y: -15 * intensity,
                     duration: 0.2,
                     ease: "power1.out",
@@ -34,7 +36,7 @@ const Dock = () => {
         const handleMouseMove = (e) => {
             const { left } = dock.getBoundingClientRect();
 
-            animateIcons(e.clientX - left);
+            animateIcons(e.clientX - left, left);
         };
 
         const resetIcons = () => {
@@ -57,7 +59,22 @@ const Dock = () => {
         };
     }, []);
 
-    const toggleApp = ({ id, canOpen }) => {};
+    const toggleApp = (app) => {
+        if (!app.canOpen) return;
+
+        const window = windows[app.id];
+        if (!window) {
+            console.error(`Window not found for app: ${app.id}`);
+            return;
+        }
+
+        if (window.isOpen) {
+            closeWindow(app.id);
+        }
+        else {
+            openWindow(app.id);
+        }
+    };
 
     return (
         <section id="dock">
