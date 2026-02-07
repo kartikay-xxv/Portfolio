@@ -43,6 +43,18 @@ const dockApps = [
     canOpen: true,
   },
   {
+    id: "terminal",
+    name: "Skills", 
+    icon: "terminal.png",
+    canOpen: true,
+  },
+  {
+    id: "contact",
+    name: "Contact", 
+    icon: "contact.png",
+    canOpen: true,
+  },
+  {
     id: "safari",
     name: "Articles", 
     icon: "safari.png",
@@ -55,22 +67,10 @@ const dockApps = [
     canOpen: true,
   },
   {
-    id: "contact",
-    name: "Contact", 
-    icon: "contact.png",
-    canOpen: true,
-  },
-  {
-    id: "terminal",
-    name: "Skills", 
-    icon: "terminal.png",
-    canOpen: true,
-  },
-  {
     id: "trash",
-    name: "Archive", 
+    name: "Trash", 
     icon: "trash.png",
-    canOpen: false,
+    canOpen: true,
   },
 ];
 
@@ -126,34 +126,57 @@ const techStack = [
   },
 ];
 
+const profile = {
+    name: "Kartikay Singh",
+    email: "kartikay.workspace@gmail.com",
+    workMode: "Remote / Hybrid / On-site • Relocation Ready",
+    availability: "Available Immediately", // or "3 Months Notice • Service Bond"
+    company: "Current Company",
+    location: "India • IST (UTC+5:30)",
+};
+
 const socials = [
   {
-    id: 1,
-    text: "Github",
-    icon: "/icons/github.svg",
-    bg: "#f4656b",
-    link: "https://github.com/JavaScript-Mastery-Pro",
+  id: 1,
+  text: "Gmail",
+  icon: "/icons/gmail.svg",
+  bg: "#EA4335",
+  link: "https://mail.google.com/mail/?view=cm&to=kartikay.workspace@gmail.com",
   },
   {
     id: 2,
-    text: "Platform",
-    icon: "/icons/atom.svg",
-    bg: "#4bcb63",
-    link: "https://jsmastery.com/",
+    text: "Github",
+    icon: "/icons/github.svg",
+    bg: "#24292F",
+    link: "https://github.com/kartikay-xxv",
   },
   {
     id: 3,
-    text: "Twitter/X",
-    icon: "/icons/twitter.svg",
-    bg: "#ff866b",
-    link: "https://x.com/jsmasterypro",
+    text: "LinkedIn",
+    icon: "/icons/linkedin.svg",
+    bg: "#0A66C2",
+    link: "https://www.linkedin.com/in/kartikay-xxv",
   },
   {
     id: 4,
-    text: "LinkedIn",
-    icon: "/icons/linkedin.svg",
-    bg: "#05b6f6",
-    link: "https://www.linkedin.com/company/javascriptmastery/posts/?feedView=all",
+    text: "Portfolio",
+    icon: "/icons/macos.svg",
+    bg: "#007AFF",
+    link: "https://kartikay.dev",
+  },
+  {
+    id: 5,
+    text: "Instagram",
+    icon: "/icons/instagram.svg",
+    bg: "#D300C5",
+    link: "https://www.instagram.com/kartikay_xxv",
+  },
+  {
+    id: 6,
+    text: "Twitter/X",
+    icon: "/icons/twitter.svg",
+    bg: "#000000",
+    link: "https://x.com/kartikay_xxv",
   },
 ];
 
@@ -189,18 +212,26 @@ const gallery = [
   {
     id: 1,
     img: "/images/gal1.png",
+    title: "Conference Talk",
+    categories: ["Memories", "People", "Favorites"],
   },
   {
     id: 2,
     img: "/images/gal2.png",
+    title: "JS Mastery",
+    categories: ["Favorites"],
   },
   {
     id: 3,
     img: "/images/gal3.png",
+    title: "Team Meetup",
+    categories: ["Memories", "People", "Places"],
   },
   {
     id: 4,
     img: "/images/gal4.png",
+    title: "Panel Session",
+    categories: ["Places", "People"],
   },
 ];
 
@@ -210,6 +241,7 @@ export {
   dockApps,
   blogPosts,
   techStack,
+  profile,
   socials,
   photosLinks,
   gallery,

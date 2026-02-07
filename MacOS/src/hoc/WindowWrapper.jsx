@@ -15,10 +15,12 @@ const WindowWrapper = (Component, windowKey) => {
             if (!el || !isOpen) return;
 
             el.style.display = "block";
+            el.style.top = "45%";
+            el.style.left = "50%";
 
             gsap.fromTo(el, 
-                { scale: 0.1, opacity: 0, y: 40 },
-                { scale: 1, opacity: 1, y: 0, duration: 0.3, ease:"power3.out" },
+                { scale: 0.1, opacity: 0, xPercent: -50, yPercent: -50, x: 0, y: 40 },
+                { scale: 1, opacity: 1, xPercent: -50, yPercent: -50, x: 0, y: 0, duration: 0.3, ease: "power3.out" },
             );
         }, [isOpen]);
 
@@ -39,11 +41,8 @@ const WindowWrapper = (Component, windowKey) => {
         }, [isOpen]);
 
         return (
-            <section 
-                id={windowKey} 
-                ref={ref} 
-                style={ {zIndex} }>
-                    <Component {...props} />
+            <section id={windowKey} ref={ref} style={ {zIndex} }>
+                <Component {...props} />
             </section>
         );
     };
