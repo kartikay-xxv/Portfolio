@@ -7,7 +7,7 @@ import useWindowStore from "#store/window.js";
 
 const Dock = () => {
     const dockRef = useRef(null);
-    const { openWindow, closeWindow, focusWindow } = useWindowStore();
+    const { openWindow, closeWindow, windows } = useWindowStore();
 
     useGSAP( () => {
         const dock = dockRef.current;
@@ -15,9 +15,7 @@ const Dock = () => {
         
         const icons = dock.querySelectorAll(".dock-icon");
         
-        const animateIcons = (mouseX, left) => {
-            const { left: dockLeft } = left;
-            
+        const animateIcons = (mouseX, dockLeft) => {
             icons.forEach( (icon) => {
                 const { left: iconLeft, width } = icon.getBoundingClientRect();
                 const center = iconLeft - dockLeft + width / 2;
@@ -25,7 +23,7 @@ const Dock = () => {
                 const intensity = Math.exp(-(distance ** 2.5) / 20000);
                 
                 gsap.to(icon, {
-                    scale: 1 + 0.35 * intensity,
+                    scale: 1 + 0.3 * intensity,
                     y: -15 * intensity,
                     duration: 0.2,
                     ease: "power1.out",
@@ -75,7 +73,7 @@ const Dock = () => {
             openWindow(app.id);
         }
     };
-
+    
     return (
         <section id="dock">
             <div ref={dockRef} className="dock-container">

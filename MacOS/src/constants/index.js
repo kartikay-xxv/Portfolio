@@ -101,28 +101,28 @@ const blogPosts = [
 
 const techStack = [
   {
-    category: "Frontend",
-    items: ["React.js", "Next.js", "TypeScript"],
+    category: "Languages",
+    items: ["Java", "C++", "SQL", "HTML", "CSS", "JavaScript", "TypeScript", "Bash"],
   },
   {
-    category: "Mobile",
-    items: ["React Native", "Expo"],
+    category: "Frameworks & Libraries",
+    items: ["C++ STL", "Tailwind CSS", "Express.js", "EJS", "Mongoose", "React.js", "Vite", "Redux Toolkit", "Next.js", "GSAP", "Zustand"],
   },
   {
-    category: "Styling",
-    items: ["Tailwind CSS", "Sass", "CSS"],
+    category: "Databases, Authentication & Security",
+    items: ["MySQL", "PostgreSQL", "MongoDB", "NextAuth.js", "JWT"],
   },
   {
-    category: "Backend",
-    items: ["Node.js", "Express", "NestJS", "Hono"],
+    category: "DevOps, Cloud & CI/CD",
+    items: ["AWS", "Terraform", "Ansible", "Jenkins", "GitHub Actions", "Docker", "Kubernetes"],
   },
+  // {
+  //   category: "AI",
+  //   items: [],
+  // },
   {
-    category: "Database",
-    items: ["MongoDB", "PostgreSQL"],
-  },
-  {
-    category: "Dev Tools",
-    items: ["Git", "GitHub", "Docker"],
+    category: "Platforms, Monitoring & Tools",
+    items: ["Figma", "Git", "GitHub", "Postman", "Hostinger", "Apache", "Nginx", "PM2", "Vercel", "Render", "CodeRabbit", "Cloudflare", "n8n", "Linux System Administration"],
   },
 ];
 

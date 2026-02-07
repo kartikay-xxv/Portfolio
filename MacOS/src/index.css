@@ -163,46 +163,36 @@ body {
   }
 
   #terminal {
-    @apply w-xl absolute top-32 left-1/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-4xl max-w-[90vw] absolute top-16 left-1/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
     }
 
     .techstack {
-      @apply text-sm font-roboto p-5;
+      @apply text-sm font-roboto p-5 max-h-[68vh] overflow-y-auto;
 
       .label {
-        @apply flex items-center ms-10 mt-7;
+        @apply mt-6 text-gray-500 font-medium;
       }
 
       .content {
-        @apply py-5 my-5 border-y border-dashed space-y-1;
+        @apply py-4 my-4 border-y border-dashed;
 
-        li {
           .check {
-            @apply text-[#00A154] w-5;
+            @apply text-[#00A154];
           }
 
           h3 {
-            @apply font-semibold text-[#00A154] w-32 ms-5;
+            @apply font-semibold text-[#00A154];
           }
-
-          ul {
-            @apply flex items-center gap-3;
-          }
-        }
       }
 
       .footnote {
         @apply text-[#00A154] space-y-1;
 
         p {
-          @apply flex items-center;
-
-          svg {
-            @apply w-5 me-5;
-          }
+          @apply flex items-center gap-4;
         }
       }
     }
