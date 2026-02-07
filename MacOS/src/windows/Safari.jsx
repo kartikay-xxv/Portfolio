@@ -50,7 +50,7 @@ const Safari = () => {
                 onPointerDown={stopDrag}
             >
                 <div className="blog !py-6">
-                    <h2 className="!mb-5">My Developer Blog</h2>
+                    <h2 className="!mb-5">Experience</h2>
 
                     <div className="space-y-5">
                         {blogPosts.map(({ id, image, title, date, link }) => (

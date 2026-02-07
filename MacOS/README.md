@@ -1,11 +1,14 @@
 <div align="center">
 
-#  macOS Developer Portfolio
+<h1 align="center">
+  <img src="./public/images/macbook.png" alt="macOS" width="36" align="center" />
+  macOS Developer Portfolio
+</h1>
 
 An interactive, macOS-inspired desktop portfolio built with **React**, **GSAP**, **Tailwind CSS**, and **Zustand**.  
 Explore projects, skills, articles, and a downloadable resume inside draggable, stackable OS windows.
 
-[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=black)](https://gsap.com/)

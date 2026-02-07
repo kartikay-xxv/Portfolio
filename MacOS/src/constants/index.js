@@ -56,7 +56,7 @@ const dockApps = [
   },
   {
     id: "safari",
-    name: "Articles", 
+    name: "Experience", 
     icon: "safari.png",
     canOpen: true,
   },
@@ -131,7 +131,7 @@ const profile = {
     email: "kartikay.workspace@gmail.com",
     workMode: "Remote / Hybrid / On-site • Relocation Ready",
     availability: "Available Immediately", // or "3 Months Notice • Service Bond"
-    company: "Current Company",
+    company: "No Company",
     location: "India • IST (UTC+5:30)",
 };
 
@@ -183,27 +183,27 @@ const socials = [
 const photosLinks = [
   {
     id: 1,
-    icon: "/icons/gicon1.svg",
+    icon: "/icons/library.svg",
     title: "Library",
   },
   {
     id: 2,
-    icon: "/icons/gicon2.svg",
+    icon: "/icons/memories.svg",
     title: "Memories",
   },
   {
     id: 3,
-    icon: "/icons/file.svg",
+    icon: "/icons/places.svg",
     title: "Places",
   },
   {
     id: 4,
-    icon: "/icons/gicon4.svg",
+    icon: "/icons/people.svg",
     title: "People",
   },
   {
     id: 5,
-    icon: "/icons/gicon5.svg",
+    icon: "/icons/favorites.svg",
     title: "Favorites",
   },
 ];
@@ -211,28 +211,28 @@ const photosLinks = [
 const gallery = [
   {
     id: 1,
-    img: "/images/gal1.png",
-    title: "Conference Talk",
-    categories: ["Memories", "People", "Favorites"],
+    img: "/images/gal1.jpg",
+    title: "Bahubali lake",
+    categories: ["Memories", "Places", "Favorites"],
   },
   {
     id: 2,
-    img: "/images/gal2.png",
-    title: "JS Mastery",
-    categories: ["Favorites"],
+    img: "/images/gal2.jpg",
+    title: "Udaipur view",
+    categories: ["Memories", "Places", "Favorites"],
   },
   {
     id: 3,
-    img: "/images/gal3.png",
-    title: "Team Meetup",
-    categories: ["Memories", "People", "Places"],
+    img: "/images/gal3.jpg",
+    title: "Profile pic",
+    categories: ["People"],
   },
-  {
-    id: 4,
-    img: "/images/gal4.png",
-    title: "Panel Session",
-    categories: ["Places", "People"],
-  },
+  // {
+  //   id: 4,
+  //   img: "/images/gal4.png",
+  //   title: "Panel Session",
+  //   categories: ["Places", "People"],
+  // },
 ];
 
 export {
@@ -260,8 +260,6 @@ const WORK_LOCATION = {
       name: "Nike Ecommerce Website Application",
       icon: "/images/folder.png",
       kind: "folder",
-      position: "top-10 left-5", // icon position inside Finder
-      windowPosition: "top-[5vh] left-5", // optional: Finder window position
       children: [
         {
           id: 1,
@@ -269,7 +267,6 @@ const WORK_LOCATION = {
           icon: "/images/txt.png",
           kind: "file",
           fileType: "txt",
-          position: "top-5 left-10",
           description: [
             "The Nike eCommerce website is a sleek and modern platform designed for shopping the latest Nike collections.",
             "Instead of a simple online store, it delivers an immersive experience with bold visuals, interactive product displays, and smooth navigation.",
@@ -284,7 +281,6 @@ const WORK_LOCATION = {
           kind: "file",
           fileType: "url",
           href: "https://youtu.be/fZdTYswuZjU?si=Awjl-pIst9e09_UU",
-          position: "top-10 right-20",
         },
         {
           id: 4,
@@ -292,7 +288,6 @@ const WORK_LOCATION = {
           icon: "/images/image.png",
           kind: "file",
           fileType: "img",
-          position: "top-52 right-80",
           imageUrl: "/images/project-1.png",
         },
         {
@@ -302,7 +297,6 @@ const WORK_LOCATION = {
           kind: "file",
           fileType: "fig",
           href: "https://google.com",
-          position: "top-60 right-20",
         },
       ],
     },
@@ -313,8 +307,6 @@ const WORK_LOCATION = {
       name: "AI Resume Analyzer",
       icon: "/images/folder.png",
       kind: "folder",
-      position: "top-52 right-80",
-      windowPosition: "top-[20vh] left-7",
       children: [
         {
           id: 1,
@@ -322,7 +314,6 @@ const WORK_LOCATION = {
           icon: "/images/txt.png",
           kind: "file",
           fileType: "txt",
-          position: "top-5 right-10",
           description: [
             "AI Resume Analyzer is a smart tool that helps you perfect your resume with instant feedback.",
             "Instead of guessing what recruiters want, you get AI-powered insights on keywords, formatting, and overall impact.",
@@ -337,7 +328,6 @@ const WORK_LOCATION = {
           kind: "file",
           fileType: "url",
           href: "https://youtu.be/iYOz165wGkQ?si=R1hs8Legl200m0Cl",
-          position: "top-20 left-20",
         },
         {
           id: 4,
@@ -345,7 +335,6 @@ const WORK_LOCATION = {
           icon: "/images/image.png",
           kind: "file",
           fileType: "img",
-          position: "top-52 left-80",
           imageUrl: "/images/project-2.png",
         },
         {
@@ -355,7 +344,6 @@ const WORK_LOCATION = {
           kind: "file",
           fileType: "fig",
           href: "https://google.com",
-          position: "top-60 left-5",
         },
       ],
     },
@@ -366,8 +354,6 @@ const WORK_LOCATION = {
       name: "Food Delivery App",
       icon: "/images/folder.png",
       kind: "folder",
-      position: "top-10 left-80",
-      windowPosition: "top-[33vh] left-7",
       children: [
         {
           id: 1,
@@ -375,7 +361,6 @@ const WORK_LOCATION = {
           icon: "/images/txt.png",
           kind: "file",
           fileType: "txt",
-          position: "top-5 left-10",
           description: [
             "Our Food Delivery App is a fast and convenient way to order meals from your favorite restaurants.",
             "Instead of making calls or waiting in line, you can browse menus, customize orders, and track deliveries in real time.",
@@ -390,7 +375,6 @@ const WORK_LOCATION = {
           kind: "file",
           fileType: "url",
           href: "https://youtu.be/LKrX390fJMw?si=cExkuVhf2DTV9G2-",
-          position: "top-10 right-20",
         },
         {
           id: 4,
@@ -398,7 +382,6 @@ const WORK_LOCATION = {
           icon: "/images/image.png",
           kind: "file",
           fileType: "img",
-          position: "top-52 right-80",
           imageUrl: "/images/project-3.png",
         },
         {
@@ -408,7 +391,6 @@ const WORK_LOCATION = {
           kind: "file",
           fileType: "fig",
           href: "https://google.com",
-          position: "top-60 right-20",
         },
       ],
     },
@@ -428,41 +410,37 @@ const ABOUT_LOCATION = {
       icon: "/images/image.png",
       kind: "file",
       fileType: "img",
-      position: "top-10 left-5",
-      imageUrl: "/images/adrian.jpg",
+      imageUrl: "/images/kartikay.jpg",
     },
     {
       id: 2,
-      name: "casual-me.png",
+      name: "casual_me.png",
       icon: "/images/image.png",
       kind: "file",
       fileType: "img",
-      position: "top-28 right-72",
-      imageUrl: "/images/adrian-2.jpg",
+      imageUrl: "/images/kartikay_2.jpeg",
     },
     {
       id: 3,
-      name: "conference-me.png",
+      name: "conference_me.png",
       icon: "/images/image.png",
       kind: "file",
       fileType: "img",
-      position: "top-52 left-80",
-      imageUrl: "/images/adrian-3.jpeg",
+      imageUrl: "/images/",
     },
     {
       id: 4,
-      name: "about-me.txt",
+      name: "about_me.txt",
       icon: "/images/txt.png",
       kind: "file",
       fileType: "txt",
-      position: "top-60 left-5",
       subtitle: "Meet the Developer Behind the Code",
-      image: "/images/adrian.jpg",
+      image: "/images/kartikay.jpg",
       description: [
-        "Hey! I’m Adrian 👋, a web developer who enjoys building sleek, interactive websites that actually work well.",
-        "I specialize in JavaScript, React, and Next.js—and I love making things feel smooth, fast, and just a little bit delightful.",
-        "I’m big on clean UI, good UX, and writing code that doesn’t need a search party to debug.",
-        "Outside of dev work, you'll find me tweaking layouts at 2AM, sipping overpriced coffee, or impulse-buying gadgets I absolutely convinced myself I needed 😅",
+        "Hey! I’m Kartikay 👋, a full-stack developer and CSE grad who enjoys building scalable web apps, cloud-native systems, and practical AI tools that actually hold up in production.",
+        "I specialize in TypeScript, React, Next.js, and Node.js—backed by AWS, Docker, Kubernetes, and applied GenAI pipelines.",
+        "I’m big on clean architecture, low-latency performance, and writing reliable code—from ACID-compliant ledgers to real-time WebSocket engines—that doesn’t need a search party to debug.",
+        "Outside of shipping code, you’ll find me tweaking layouts at 2AM, automating workflows I could’ve done manually in five minutes, or exploring new tech stacks just to see how they tick 😅",
       ],
     },
   ],
@@ -496,21 +474,27 @@ const TRASH_LOCATION = {
   children: [
     {
       id: 1,
-      name: "trash1.png",
+      name: "trash_portfolio_1.png",
       icon: "/images/image.png",
       kind: "file",
       fileType: "img",
-      position: "top-10 left-10",
       imageUrl: "/images/trash-1.png",
     },
     {
       id: 2,
-      name: "trash2.png",
+      name: "generic_portfolio_1.png",
       icon: "/images/image.png",
       kind: "file",
       fileType: "img",
-      position: "top-40 left-80",
       imageUrl: "/images/trash-2.png",
+    },
+    {
+      id: 3,
+      name: "generic_portfolio_2.png",
+      icon: "/images/image.png",
+      kind: "file",
+      fileType: "img",
+      imageUrl: "/images/trash-3.png",
     },
   ],
 };
