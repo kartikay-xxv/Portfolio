@@ -27,7 +27,7 @@ const ControlButton = ({ onClick, disabled, title, icon: Icon, iconClass = "size
         onClick={onClick}
         disabled={disabled}
         title={title}
-        className="p-1 rounded hover:bg-gray-200 disabled:opacity-40 cursor-pointer"
+        className="p-1 rounded hover:bg-gray-200 dark:hover:bg-white/10 disabled:opacity-40 cursor-pointer"
     >
         <Icon className={iconClass} />
     </button>
@@ -164,7 +164,7 @@ const ImageWindowContent = () => {
                 <WindowControls target="imgfile" />
                 <h2 className="truncate flex-1 text-center">{name}</h2>
 
-                <div ref={controlsRef} className="flex items-center gap-1 text-gray-600">
+                <div ref={controlsRef} className="flex items-center gap-1 text-gray-600 dark:text-gray-300">
                     <ControlButton
                         onClick={() => updateScale(scale - ZOOM_STEP)}
                         disabled={scale <= MIN_SCALE}
@@ -193,13 +193,13 @@ const ImageWindowContent = () => {
                 </div>
             </div>
 
-            <div ref={bodyRef} className="p-4 bg-white">
+            <div ref={bodyRef} className="p-4 bg-white dark:bg-[#1e1e20]">
                 {imageUrl ? (
                     <div
                         ref={containerRef}
                         onWheel={handleWheel}
                         onDoubleClick={handleDoubleClick}
-                        className={`w-full h-[56vh] overflow-hidden rounded bg-gray-50 flex items-center justify-center select-none touch-none ${cursorClass}`}
+                        className={`w-full h-[56vh] overflow-hidden rounded bg-gray-50 dark:bg-[#141416] flex items-center justify-center select-none touch-none ${cursorClass}`}
                     >
                         <img
                             src={imageUrl}

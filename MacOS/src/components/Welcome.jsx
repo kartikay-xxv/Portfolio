@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const FONT_WEIGHTS = {
-  subtitle: { min: 100, max: 400, default: 100 },
+  subtitle: { min: 100, max: 400, default: 250 },
   title: { min: 400, max: 900, default: 400 }
 };
 
@@ -80,7 +80,7 @@ const Welcome = () => {
                 {renderText(
                     "Hey, I'm Kartikay! Welcome to my",
                     "text-3xl font-georama",
-                    100
+                    250
                 )}
             </p>
             <h1 ref={titleRef} className="mt-7">

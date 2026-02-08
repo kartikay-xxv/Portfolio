@@ -29,20 +29,20 @@ const Contact = () => {
             </div>
 
             <div
-                className="p-5 space-y-4 max-h-[62vh] overflow-y-auto bg-white"
+                className="p-5 space-y-4 max-h-[62vh] overflow-y-auto bg-white dark:bg-[#1e1e20]"
                 onMouseDown={stopDrag}
                 onPointerDown={stopDrag}
             >
-                <div className="w-full flex items-center justify-between gap-6 pb-4 border-b border-gray-200">
+                <div className="w-full flex items-center justify-between gap-6 pb-4 border-b border-gray-200 dark:border-white/10">
                     <img
                         src="/images/kartikay.jpg"
                         alt={profile.name}
-                        className="w-[116px] h-[116px] rounded-full object-cover shrink-0 ring-2 ring-gray-200"
+                        className="w-[116px] h-[116px] rounded-full object-cover shrink-0 ring-2 ring-gray-200 dark:ring-white/15"
                     />
 
                     <div className="flex-1 min-w-0 min-h-[116px] flex flex-col justify-between items-start gap-2">
                         <div className="w-full flex items-center justify-between gap-2">
-                            <span className="text-[17px] font-bold text-gray-900 leading-snug truncate">
+                            <span className="text-[17px] font-bold text-gray-900 dark:text-gray-100 leading-snug truncate">
                                 {profile.name}
                             </span>
 
@@ -50,7 +50,7 @@ const Contact = () => {
                                 type="button"
                                 onClick={handleCopyEmail}
                                 title={`Copy ${profile.email}`}
-                                className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-medium leading-none rounded-md border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors cursor-pointer shrink-0"
+                                className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-medium leading-none rounded-md border border-gray-200 dark:border-white/15 bg-gray-50 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/15 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer shrink-0"
                             >
                                 {copied ? (
                                     <>
@@ -66,22 +66,22 @@ const Contact = () => {
                             </button>
                         </div>
 
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-medium leading-snug rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-medium leading-snug rounded-full bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-400/30">
                             <Globe className="size-3 shrink-0" />
                             <span>{profile.workMode}</span>
                         </span>
 
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-medium leading-snug rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-medium leading-snug rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-400/30">
                             <span className="size-1.5 rounded-full bg-emerald-500 shrink-0" />
                             <span>{profile.availability}</span>
                         </span>
 
-                        <span className="inline-flex items-center gap-1.5 text-xs leading-snug text-gray-600">
+                        <span className="inline-flex items-center gap-1.5 text-xs leading-snug text-gray-600 dark:text-gray-300">
                             <Briefcase className="size-3.5 text-gray-400 shrink-0" />
                             <span>{profile.company}</span>
                         </span>
 
-                        <span className="inline-flex items-center gap-1.5 text-xs leading-snug text-gray-600">
+                        <span className="inline-flex items-center gap-1.5 text-xs leading-snug text-gray-600 dark:text-gray-300">
                             <MapPin className="size-3.5 text-gray-400 shrink-0" />
                             <span>{profile.location}</span>
                         </span>
@@ -89,8 +89,8 @@ const Contact = () => {
                 </div>
 
                 <div className="space-y-1">
-                    <h3>Let's Connect</h3>
-                    <p>Got an idea to ship, a bug to squash, or just wanna to talk tech? I'm in.</p>
+                    <h3 className="text-gray-900 dark:text-gray-100">Let's Connect</h3>
+                    <p className="text-gray-600 dark:text-gray-300">Got an idea to ship, a bug to squash, or just wanna to talk tech? I'm in.</p>
                 </div>
 
                 <ul>

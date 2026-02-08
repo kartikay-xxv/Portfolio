@@ -23,7 +23,7 @@ const Terminal = () => {
                     <p>Technologies</p>
                 </div>
 
-                <ul className="content divide-y divide-dashed divide-gray-200">
+                <ul className="content divide-y divide-dashed divide-gray-200 dark:divide-white/15">
                     {techStack.map(({ category, items }) => (
                         <li
                             key={category}
@@ -48,8 +48,8 @@ const Terminal = () => {
                         <Check size={16} /> {techStack.length} of {techStack.length} categories loaded successfully
                     </p>
 
-                    <p className="text-black">
-                        <Flag size={13} fill="black" />
+                    <p className="text-black dark:text-gray-200">
+                        <Flag className="fill-current" size={13} />
                         Render time: 5ms
                     </p>
                 </div>

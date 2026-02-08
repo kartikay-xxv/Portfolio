@@ -134,7 +134,7 @@ const Photos = () => {
             <div id="window-header">
                 <WindowControls target="photos" />
 
-                <div className="w-full flex justify-end items-center gap-3 text-gray-500">
+                <div className="w-full flex justify-end items-center gap-3 text-gray-500 dark:text-gray-300">
                     <Mail className="icon" />
                     <Search className="icon" />
                 </div>
@@ -155,9 +155,9 @@ const Photos = () => {
                                     key={id}
                                     onClick={(e) => handleTabChange(e, title)}
                                     className={
-                                        isActive
-                                            ? "!bg-blue-100 !text-blue-600 cursor-pointer"
-                                            : "!bg-transparent !text-gray-700 hover:!bg-gray-100 cursor-pointer"
+                                    isActive
+                                        ? "!bg-blue-100 !text-blue-600 dark:!bg-blue-500/20 dark:!text-blue-400 cursor-pointer"
+                                        : "!bg-transparent !text-gray-700 dark:!text-gray-300 hover:!bg-gray-100 dark:hover:!bg-white/10 cursor-pointer"
                                     }
                                 >
                                     <img src={icon} alt={title} />
@@ -188,7 +188,7 @@ const Photos = () => {
                                                 setSelectedFolder(folderName);
                                             }}
                                         >
-                                            <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center">
+                                            <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center">
                                                 {cover ? (
                                                     <img
                                                         src={cover}
@@ -201,7 +201,7 @@ const Photos = () => {
                                                 )}
                                             </div>
                                             <div className="px-0.5">
-                                                <p className="text-sm font-medium text-gray-800 truncate">
+                                                <p className="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">
                                                     {folderName}
                                                 </p>
                                                 <p className="text-xs text-gray-400">
@@ -231,7 +231,7 @@ const Photos = () => {
                                         <ChevronLeft className="size-4" />
                                         <span>{activeTab}</span>
                                     </button>
-                                    <p className="text-sm font-semibold text-gray-800">
+                                    <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
                                         {selectedFolder}{" "}
                                         <span className="font-normal text-gray-400">
                                             ({visiblePhotos.length})
@@ -245,7 +245,7 @@ const Photos = () => {
                                     {visiblePhotos.map((item) => (
                                         <li
                                             key={item.id ?? item.img}
-                                            className="aspect-square overflow-hidden rounded-lg bg-gray-100 cursor-pointer group"
+                                            className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-white/5 cursor-pointer group"
                                             onClick={(e) => handleOpenImage(e, item)}
                                         >
                                             <img

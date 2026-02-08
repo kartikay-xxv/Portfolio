@@ -1,16 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 html,
 body {
   width: 100dvw;
   overflow: hidden;
   height: 100dvh;
-  background-image: url("/images/wallpaper.png");
+  background-color: #0b1021;
+  background-image: url("/images/wallpaper-light.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  transition: background-image 0.25s ease;
+}
+
+html.dark,
+html.dark body {
+  background-image: url("/images/wallpaper-dark.jpg");
 }
 
 @theme {
@@ -37,9 +45,9 @@ body {
   }
 
   nav {
-    @apply flex justify-between items-center bg-white/50 backdrop-blur-3xl py-1 px-4 select-none;
+    @apply flex justify-between items-center bg-white/50 dark:bg-black/45 backdrop-blur-3xl py-1 px-4 select-none transition-colors;
 
-    div {
+    > div {
       @apply flex items-center max-sm:w-full max-sm:justify-center gap-4;
 
       &:last-child {
@@ -56,18 +64,18 @@ body {
     }
 
     time {
-      @apply text-xs font-medium text-black;
+      @apply text-xs font-medium text-black dark:text-white/95;
     }
   }
 }
 
 @layer components {
   .icon {
-    @apply p-1 hover:bg-gray-200 rounded hover:cursor-default;
+    @apply p-1 hover:bg-gray-200 dark:hover:bg-white/10 rounded hover:cursor-default;
   }
 
   #welcome {
-    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
+    @apply text-black dark:text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
 
     .small-screen {
       @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
@@ -82,7 +90,7 @@ body {
     @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
 
     .dock-container {
-      @apply bg-white/20 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1.5;
+      @apply bg-white/20 dark:bg-black/35 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1.5 border border-white/20 dark:border-white/10;
     }
 
     .tooltip {
@@ -115,7 +123,7 @@ body {
   }
 
   #window-header {
-    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 dark:bg-[#2a2a2d] border-b border-gray-200 dark:border-white/10 select-none text-sm text-gray-500 dark:text-gray-300;
   }
 
   .window-maximized {
@@ -148,10 +156,10 @@ body {
   }
 
   #safari {
-    @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     .search {
-      @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2;
+      @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2 dark:bg-[#2c2c2f] dark:border-white/15;
 
       input {
         @apply placeholder:text-gray-400;
@@ -159,10 +167,10 @@ body {
     }
 
     .blog {
-      @apply bg-white p-10 max-w-3xl mx-auto;
+      @apply bg-white p-10 max-w-3xl mx-auto dark:bg-[#1e1e20];
 
       h2 {
-        @apply text-xl font-bold text-pink-600 mb-10;
+        @apply text-xl font-bold text-pink-600 mb-10 dark:text-pink-400;
       }
 
       .blog-post {
@@ -192,7 +200,7 @@ body {
   }
 
   #terminal {
-    @apply w-4xl max-w-[90vw] absolute top-16 left-1/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-4xl max-w-[90vw] absolute top-16 left-1/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
@@ -202,11 +210,11 @@ body {
       @apply text-sm font-roboto p-5 max-h-[68vh] overflow-y-auto;
 
       .label {
-        @apply mt-6 text-gray-500 font-medium;
+        @apply mt-6 text-gray-500 font-medium dark:text-gray-400;
       }
 
       .content {
-        @apply py-4 my-4 border-y border-dashed;
+        @apply py-4 my-4 border-y border-dashed dark:border-white/15;
 
           .check {
             @apply text-[#00A154];
@@ -228,7 +236,7 @@ body {
   }
 
   #contact {
-    @apply max-w-2xl absolute top-60 left-5/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply max-w-2xl absolute top-60 left-5/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
@@ -256,10 +264,10 @@ body {
   }
 
   #photos {
-    @apply w-3xl max-w-[90vw] absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-3xl max-w-[90vw] absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     .sidebar {
-      @apply w-3/12 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-5;
+      @apply w-3/12 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-5 dark:bg-[#252528] dark:border-white/10;
 
       h2 {
         @apply text-xs font-medium text-gray-400 mb-1;
@@ -290,7 +298,7 @@ body {
   }
 
   #resume {
-    @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     #window-header {
       h2 {
@@ -300,10 +308,10 @@ body {
   }
 
   #finder {
-    @apply absolute w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl;
+    @apply absolute w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl dark:bg-[#1e1e20] dark:text-gray-100;
 
     .sidebar {
-      @apply w-48 bg-gray-50 border-r border-gray-200 flex flex-col p-5 space-y-3;
+      @apply w-48 bg-gray-50 border-r border-gray-200 flex flex-col p-5 space-y-3 dark:bg-[#252528] dark:border-white/10;
 
       h3 {
         @apply text-xs font-medium text-gray-400 mb-1;
@@ -313,11 +321,11 @@ body {
         @apply space-y-1;
 
         .active {
-          @apply bg-blue-100 text-blue-700;
+          @apply bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400;
         }
 
         .not-active {
-          @apply text-gray-700 hover:bg-gray-200;
+          @apply text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-white/10;
         }
 
         li {
@@ -327,24 +335,24 @@ body {
     }
 
     .content {
-      @apply flex-1 grid grid-cols-3 gap-5 content-start p-6 bg-white max-w-2xl relative overflow-y-auto;
+      @apply flex-1 grid grid-cols-3 gap-5 content-start p-6 bg-white max-w-2xl relative overflow-y-auto dark:bg-[#1e1e20];
 
       li {
-        @apply static w-full flex flex-col items-center justify-start gap-2 px-2 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors;
+        @apply static w-full flex flex-col items-center justify-start gap-2 px-2 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors dark:hover:bg-white/10;
 
         img {
           @apply size-14 object-contain object-center relative group-hover:scale-105;
         }
 
         p {
-          @apply w-full text-center text-[13px] leading-[1.3] font-medium text-gray-800 line-clamp-2 break-words;
+          @apply w-full text-center text-[13px] leading-[1.3] font-medium text-gray-800 line-clamp-2 break-words dark:text-gray-200;
         }
       }
     }
   }
 
   #txtfile {
-    @apply w-md absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-md absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
@@ -352,7 +360,7 @@ body {
   }
 
   #imgfile {
-    @apply w-xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     #window-header {
       p {
@@ -381,7 +389,7 @@ body {
         }
 
         p {
-          @apply text-sm text-white text-center px-1 rounded-md group-hover:bg-blue-500 transition-colors max-w-40;
+          @apply text-sm text-black dark:text-white text-center px-1 rounded-md group-hover:bg-blue-500 group-hover:text-white transition-colors max-w-40;
         }
       }
     }

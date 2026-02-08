@@ -52,7 +52,7 @@ const Finder = () => {
                 <Search className="icon" />
             </div>
 
-            <div className="bg-white flex h-[62vh]">
+            <div className="bg-white dark:bg-[#1e1e20] flex h-[62vh]">
                 <div
                     className="sidebar shrink-0 overflow-y-auto"
                     onMouseDown={stopDrag}

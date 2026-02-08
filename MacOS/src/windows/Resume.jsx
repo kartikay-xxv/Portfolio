@@ -59,7 +59,7 @@ const Resume = () => {
                     <button
                         type="button"
                         onClick={resetZoom}
-                        className="text-xs text-gray-500 w-10 text-center cursor-pointer hover:text-black"
+                        className="text-xs text-gray-500 dark:text-gray-400 w-10 text-center cursor-pointer hover:text-black dark:hover:text-white"
                         title="Reset zoom to 100%"
                     >
                         {Math.round(scale * 100)}%
@@ -95,7 +95,7 @@ const Resume = () => {
                     onLoadSuccess={onDocumentLoadSuccess}
                     externalLinkTarget="_blank"
                     externalLinkRel="noopener noreferrer"
-                    className="flex flex-col items-center gap-4 bg-gray-100 p-4 w-max min-w-full"
+                    className="flex flex-col items-center gap-4 bg-gray-100 dark:bg-[#161618] p-4 w-max min-w-full"
                 >
                     {Array.from({ length: numPages || 0 }, (_, index) => (
                         <Page

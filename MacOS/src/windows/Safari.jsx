@@ -60,9 +60,9 @@ const ExperienceCard = ({ item }) => {
     const duration = [from, to].filter(Boolean).join(" — ");
 
     return (
-        <article className="rounded-xl border border-gray-200 bg-white p-5 shadow-xs hover:border-gray-300 transition-colors">
+        <article className="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#262629] p-5 shadow-xs hover:border-gray-300 dark:hover:border-white/20 transition-colors">
             <div className="flex items-start gap-4">
-                <div className="size-12 shrink-0 rounded-lg border border-gray-200 bg-gray-50 flex-center overflow-hidden">
+                <div className="size-12 shrink-0 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 flex-center overflow-hidden">
                     {logo ? (
                         <img
                             src={logo}
@@ -79,7 +79,7 @@ const ExperienceCard = ({ item }) => {
                     <div className="flex flex-wrap items-start justify-between gap-2">
                         <div className="min-w-0">
                             <div className="flex flex-wrap items-center gap-2">
-                                <h3 className="font-semibold text-base text-gray-900">
+                                <h3 className="font-semibold text-base text-gray-900 dark:text-gray-100">
                                     {role}
                                 </h3>
                                 {type && (
@@ -90,14 +90,14 @@ const ExperienceCard = ({ item }) => {
                                     </span>
                                 )}
                             </div>
-                            <p className="text-sm font-medium text-gray-600">
+                            <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
                                 {organization}
                             </p>
                         </div>
 
                         <div className="flex flex-col items-end text-xs text-gray-500 shrink-0 gap-1">
                             {duration && (
-                                <span className="inline-flex items-center gap-1 font-medium text-gray-600">
+                                <span className="inline-flex items-center gap-1 font-medium text-gray-600 dark:text-gray-300">
                                     <Calendar className="size-3.5" />
                                     {duration}
                                 </span>
@@ -112,13 +112,13 @@ const ExperienceCard = ({ item }) => {
                     </div>
 
                     {summary && (
-                        <p className="text-sm text-gray-600 leading-relaxed">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                             {summary}
                         </p>
                     )}
 
                     {highlights.length > 0 && (
-                        <ul className="list-disc pl-4 space-y-1 text-sm text-gray-600">
+                        <ul className="list-disc pl-4 space-y-1 text-sm text-gray-600 dark:text-gray-300">
                             {highlights.map((point, idx) => (
                                 <li key={idx}>{point}</li>
                             ))}
@@ -131,7 +131,7 @@ const ExperienceCard = ({ item }) => {
                                 {tech.map((skill) => (
                                     <span
                                         key={skill}
-                                        className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-gray-100 text-gray-700"
+                                        className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-200"
                                     >
                                         {skill}
                                     </span>
@@ -208,7 +208,7 @@ const Safari = () => {
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Search experience, role, or tech..."
-                            className="flex-1 outline-none text-gray-700"
+                            className="flex-1 outline-none text-gray-700 dark:text-gray-100"
                         />
                     </div>
                 </div>
@@ -247,16 +247,16 @@ const Safari = () => {
                     </div>
 
                     {experiences.length === 0 ? (
-                        <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50/70 px-6 py-12 text-center space-y-3">
-                            <div className="size-12 mx-auto rounded-full bg-white border border-gray-200 flex-center text-gray-400">
+                        <div className="rounded-xl border border-dashed border-gray-300 dark:border-white/15 bg-gray-50/70 dark:bg-white/5 px-6 py-12 text-center space-y-3">
+                            <div className="size-12 mx-auto rounded-full bg-white dark:bg-[#262629] border border-gray-200 dark:border-white/10 flex-center text-gray-400">
                                 <Briefcase className="size-5" />
                             </div>
 
                             <div className="space-y-1">
-                                <h3 className="text-base font-semibold text-gray-800">
+                                <h3 className="text-base font-semibold text-gray-800 dark:text-gray-100">
                                     No experience yet
                                 </h3>
-                                <p className="text-sm text-gray-500 max-w-md mx-auto">
+                                <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">
                                     Currently focused on building production-grade projects and
                                     actively open to internships, full-time roles, freelance work,
                                     and open-source collaborations.
@@ -264,7 +264,7 @@ const Safari = () => {
                             </div>
 
                             {profile?.availability && (
-                                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 dark:text-emerald-300 dark:bg-emerald-500/15 dark:border-emerald-400/30 px-3 py-1 rounded-full">
                                     <span className="size-1.5 rounded-full bg-emerald-500" />
                                     {profile.availability}
                                 </span>
