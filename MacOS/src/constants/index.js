@@ -28,6 +28,7 @@ const navIcons = [
   {
     id: 3,
     img: "/icons/user.svg",
+    type: "contact",
   },
   {
     id: 4,
@@ -74,29 +75,65 @@ const dockApps = [
   },
 ];
 
-const blogPosts = [
-  {
-    id: 1,
-    date: "Sep 2, 2025",
-    title:
-      "TypeScript Explained: What It Is, Why It Matters, and How to Master It",
-    image: "/images/blog1.png",
-    link: "https://jsmastery.com/blog/typescript-explained-what-it-is-why-it-matters-and-how-to-master-it",
-  },
-  {
-    id: 2,
-    date: "Aug 28, 2025",
-    title: "The Ultimate Guide to Mastering Three.js for 3D Development",
-    image: "/images/blog2.png",
-    link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-three-js-for-3d-development",
-  },
-  {
-    id: 3,
-    date: "Aug 15, 2025",
-    title: "The Ultimate Guide to Mastering GSAP Animations",
-    image: "/images/blog3.png",
-    link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-gsap-animations",
-  },
+const experiences = [
+  // Uncomment and duplicate this object whenever you add an experience:
+  // {
+  //   id: 1,
+  //   type: "Open Source", // "Internship" | "Full-Time" | "Open Source" | "Freelance" | "Startup / SaaS" | "Bug Fix"
+  //   role: "Open Source Contributor",
+  //   organization: "Project / Company Name",
+  //   logo: "/images/company-logo.png", // optional — shows a fallback icon if omitted
+  //   from: "Jan 2026",
+  //   to: "Present", // or "Mar 2026"
+  //   location: "Remote", // optional (e.g., "Bengaluru, India" or "GitHub")
+  //   summary:
+  //     "Short 1–2 line overview of what you built, fixed, or shipped.",
+  //   highlights: [
+  //     "Resolved a critical race condition reducing API latency by 40%.",
+  //     "Merged PR #142 with full unit test coverage.",
+  //   ],
+  //   tech: ["React", "TypeScript", "Node.js"], // optional
+  //   link: "https://github.com/...", // optional (PR, live app, company site, or certificate)
+  //   linkLabel: "View Pull Request", // optional (defaults to "View Details")
+  // },
+  // {
+  //   id: 1,
+  //   type: "Full-Time",
+  //   role: "Software Development Engineer",
+  //   organization: "Acme Cloud Systems",
+  //   logo: "/icons/github.svg", // sample icon to test logo rendering
+  //   from: "Aug 2026",
+  //   to: "Present",
+  //   location: "Bengaluru, India • Hybrid",
+  //   summary:
+  //     "Building scalable full-stack web services and automated cloud infrastructure for high-throughput customer dashboards.",
+  //   highlights: [
+  //     "Architected a Next.js and TypeScript dashboard reducing initial page load times by 35%.",
+  //     "Containerized backend microservices with Docker and automated zero-downtime deployments via GitHub Actions.",
+  //   ],
+  //   tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "AWS"],
+  //   link: "https://github.com/kartikay-xxv",
+  //   linkLabel: "View Company",
+  // },
+  // {
+  //   id: 2,
+  //   type: "Internship",
+  //   role: "Full-Stack Developer Intern",
+  //   organization: "NovaTech Labs",
+  //   // logo omitted to test the automatic fallback Briefcase icon
+  //   from: "Jan 2026",
+  //   to: "Jun 2026",
+  //   location: "Remote",
+  //   summary:
+  //     "Developed internal developer tools and REST/WebSocket APIs for real-time telemetry monitoring.",
+  //   highlights: [
+  //     "Implemented JWT authentication and rate-limiting middleware across 15+ Express.js endpoints.",
+  //     "Collaborated with senior engineers to optimize MongoDB aggregation queries by 50%.",
+  //   ],
+  //   tech: ["React", "Express.js", "MongoDB", "Tailwind CSS", "Redis"],
+  //   link: "https://www.linkedin.com/in/kartikay-xxv",
+  //   linkLabel: "View Certificate",
+  // },
 ];
 
 const techStack = [
@@ -208,42 +245,88 @@ const photosLinks = [
   },
 ];
 
-const gallery = [
-  {
-    id: 1,
-    img: "/images/gal1.jpg",
-    title: "Bahubali lake",
-    categories: ["Memories", "Places", "Favorites"],
-  },
-  {
-    id: 2,
-    img: "/images/gal2.jpg",
-    title: "Udaipur view",
-    categories: ["Memories", "Places", "Favorites"],
-  },
-  {
-    id: 3,
-    img: "/images/gal3.jpg",
-    title: "Profile pic",
-    categories: ["People"],
-  },
-  // {
-  //   id: 4,
-  //   img: "/images/gal4.png",
-  //   title: "Panel Session",
-  //   categories: ["Places", "People"],
-  // },
-];
+const galleryFolders = {
+  Library: [
+    "College",
+    "Home",
+  ],
+  Places: [
+    "Hyderabad",
+    "Gurugram",
+    "Mysuru",
+    "Bengaluru",
+    "Udaipur",
+    "Jaipur",
+    "Delhi",
+    "Pondicherry",
+    "Tirupati",
+    "Mumbai",
+  ],
+};
+
+const gallery = {
+  Memories: [
+    "Gurugram/4) Yum Yum Cha (Aburi Salmon Nigiri).jpeg",
+    "Home/Gifted sister camera.jpeg",
+
+    "Mysuru/1) Airbnb.jpeg",
+    "Bengaluru/Cafe.jpeg",
+
+    "Udaipur/Udaipur view.jpg",
+    "Udaipur/Bahubali lake.jpg",
+    "Jaipur/Fort.jpeg",
+    "Delhi/Qutub Minar.jpeg",
+
+    "College/7) Bowling (Siuuu !).jpeg",
+    "College/8) Trekking.jpeg",
+    
+    "Pondicherry/7) Leave.jpeg",
+    "Pondicherry/5) Restaurant.jpeg",
+    "Pondicherry/4) Beach.jpeg",
+    "Pondicherry/1) Airbnb.jpeg",
+    "Tirupati/1) Hostel stay.jpeg",
+    "Tirupati/2) Tirumala Hills.jpeg",
+
+    "College/4) Go-Karting.jpeg",
+    "College/5) Go-Karting.jpeg",
+    "College/1) Desk setup.jpeg",
+
+    "Mumbai/Beach.jpeg",
+  ],
+  People: [
+    "Home/Gifted sister camera.jpeg",
+  ],
+  Favorites: [
+    "Gurugram/4) Yum Yum Cha (Aburi Salmon Nigiri).jpeg",
+    "Home/Gifted sister camera.jpeg",
+
+    "Udaipur/Udaipur view.jpg",
+    "Udaipur/Bahubali lake.jpg",
+
+    "College/7) Bowling (Siuuu !).jpeg",
+    "College/8) Trekking.jpeg",
+    
+    "Pondicherry/5) Restaurant.jpeg",
+    "Pondicherry/1) Airbnb.jpeg",
+
+    "College/4) Go-Karting.jpeg",
+    "College/5) Go-Karting.jpeg",
+    "College/1) Desk setup.jpeg",
+
+
+  ],
+};
 
 export {
   navLinks,
   navIcons,
   dockApps,
-  blogPosts,
+  experiences,
   techStack,
   profile,
   socials,
   photosLinks,
+  galleryFolders,
   gallery,
 };
 
@@ -426,7 +509,7 @@ const ABOUT_LOCATION = {
       icon: "/images/image.png",
       kind: "file",
       fileType: "img",
-      imageUrl: "/images/",
+      imageUrl: "/images/kartikay_3.jpg",
     },
     {
       id: 4,

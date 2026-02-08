@@ -37,10 +37,10 @@ body {
   }
 
   nav {
-    @apply flex justify-between items-center bg-white/50 backdrop-blur-3xl p-2 px-5 select-none;
+    @apply flex justify-between items-center bg-white/50 backdrop-blur-3xl py-1 px-4 select-none;
 
     div {
-      @apply flex items-center max-sm:w-full max-sm:justify-center gap-5;
+      @apply flex items-center max-sm:w-full max-sm:justify-center gap-4;
 
       &:last-child {
         @apply max-sm:hidden;
@@ -48,15 +48,15 @@ body {
     }
 
     ul {
-      @apply flex items-center gap-5 max-sm:hidden;
+      @apply flex items-center gap-4 max-sm:hidden;
 
       p {
-        @apply text-sm cursor-pointer hover:underline transition-all;
+        @apply text-xs cursor-pointer hover:underline transition-all;
       }
     }
 
     time {
-      @apply text-sm font-medium text-black;
+      @apply text-xs font-medium text-black;
     }
   }
 }
@@ -102,20 +102,49 @@ body {
     @apply flex gap-2;
 
     .close {
-      @apply size-3.5 rounded-full bg-[#ff6157] cursor-pointer;
+      @apply size-3.5 rounded-full bg-[#ff6157] cursor-pointer hover:brightness-95;
     }
 
     .minimize {
-      @apply size-3.5 rounded-full bg-[#ffc030];
+      @apply size-3.5 rounded-full bg-[#ffc030] cursor-pointer hover:brightness-95;
     }
 
     .maximize {
-      @apply size-3.5 rounded-full bg-[#2acb42];
+      @apply size-3.5 rounded-full bg-[#2acb42] cursor-pointer hover:brightness-95;
     }
   }
 
   #window-header {
     @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+  }
+
+  .window-maximized {
+    @apply !max-w-none !max-h-none !translate-x-0 !translate-y-0 !rounded-none flex-col;
+
+    > #window-header {
+      @apply shrink-0 !rounded-none;
+    }
+
+    > :not(#window-header) {
+      @apply flex-1 min-h-0 !max-h-none !h-auto overflow-y-auto;
+    }
+
+    .content,
+    .blog {
+      @apply !max-w-none;
+    }
+
+    .techstack {
+      @apply !max-h-none;
+    }
+  }
+
+  #imgfile.window-maximized > :not(#window-header) {
+    @apply flex flex-col;
+
+    > div {
+      @apply flex-1 !h-full;
+    }
   }
 
   #safari {
@@ -227,7 +256,7 @@ body {
   }
 
   #photos {
-    @apply max-w-3xl absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-3xl max-w-[90vw] absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     .sidebar {
       @apply w-3/12 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-5;
@@ -257,32 +286,6 @@ body {
 
     .gallery {
       @apply p-5;
-
-      ul {
-        @apply grid grid-cols-5 grid-rows-5 gap-2.5;
-
-        li {
-          img {
-            @apply size-full object-cover rounded-lg;
-          }
-
-          &:first-child {
-            @apply row-start-1 row-span-3 col-start-1 col-span-3;
-          }
-
-          &:nth-child(2) {
-            @apply row-start-1 row-span-3 col-start-4 col-span-2;
-          }
-
-          &:nth-child(3) {
-            @apply row-start-4 row-span-2 col-start-3 col-span-3;
-          }
-
-          &:last-child {
-            @apply row-start-4 row-span-2 col-start-1 col-span-2;
-          }
-        }
-      }
     }
   }
 
