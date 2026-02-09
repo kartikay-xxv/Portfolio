@@ -5,7 +5,11 @@ gsap.registerPlugin(Draggable);
 import { Navbar, Welcome, Dock, Home } from "#components/index.js";
 import { Resume, Finder, Text, Image, Terminal, Contact, Safari, Photos } from "#windows/index.js";
 
+import useVisitorLog from "./hooks/useVisitorLog";
+
 const App = () => {
+  useVisitorLog();
+
   return (
     <main>
       <Navbar />
@@ -23,7 +27,6 @@ const App = () => {
       <Contact />
       <Safari />
       <Photos />
-      
     </main>
   )
 }
