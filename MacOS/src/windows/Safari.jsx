@@ -186,15 +186,15 @@ const Safari = () => {
             <div id="window-header">
                 <WindowControls target="safari" />
 
-                <PanelLeft className="ml-10 icon" />
+                <PanelLeft className="ml-10 icon max-md:hidden" />
 
-                <div className="flex items-center gap-1 ml-5">
+                <div className="flex items-center gap-1 ml-5 max-md:hidden">
                     <ChevronLeft className="icon" />
                     <ChevronRight className="icon" />
                 </div>
 
                 <div className="flex-1 flex-center gap-3">
-                    <ShieldHalf className="icon" />
+                    <ShieldHalf className="icon max-md:hidden" />
 
                     <div
                         className="search"
@@ -213,7 +213,7 @@ const Safari = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-5 max-md:hidden">
                     <Share className="icon" />
                     <Plus className="icon" />
                     <Copy className="icon" />
@@ -222,10 +222,10 @@ const Safari = () => {
 
             <div className="max-h-[62vh] overflow-y-auto" {...stopDragProps}>
                 <div className="blog !py-6">
-                    <div className="flex items-center justify-between gap-4 mb-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                         <div>
                             <h2 className="!mb-0.5">Experience</h2>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 dark:text-gray-300">
                                 Roles, internships, open-source contributions &amp; independent work
                             </p>
                         </div>

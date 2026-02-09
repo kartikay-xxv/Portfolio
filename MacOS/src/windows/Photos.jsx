@@ -112,6 +112,8 @@ const Photos = () => {
             imageUrl: item.img,
         });
 
+        if (window.innerWidth < 768) return;
+
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 const imgEl = document.getElementById("imgfile");
@@ -140,7 +142,7 @@ const Photos = () => {
                 </div>
             </div>
 
-            <div className="flex w-full h-[62vh]">
+            <div className="flex max-md:flex-col w-full h-[62vh]">
                 <div
                     className="sidebar shrink-0 overflow-y-auto"
                     {...stopDragProps}
@@ -174,7 +176,7 @@ const Photos = () => {
                 >
                     {isFolderTab && !selectedFolder ? (
                         visibleFolders.length > 0 ? (
-                            <ul className="grid grid-cols-3 gap-4 content-start">
+                            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4 content-start">
                                 {visibleFolders.map((folderName) => {
                                     const photos = galleryManifest[folderName] || [];
                                     const cover = photos[0]?.img;
@@ -241,7 +243,7 @@ const Photos = () => {
                             )}
 
                             {visiblePhotos.length > 0 ? (
-                                <ul className="grid grid-cols-3 gap-3 content-start">
+                                <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 content-start">
                                     {visiblePhotos.map((item) => (
                                         <li
                                             key={item.id ?? item.img}

@@ -13,7 +13,7 @@ const Dock = () => {
 
     useGSAP(() => {
         const dock = dockRef.current;
-        if (!dock) return;
+        if (!dock || window.matchMedia("(hover: none)").matches) return;
 
         const icons = dock.querySelectorAll(".dock-icon");
 
@@ -108,7 +108,7 @@ const Dock = () => {
                         </button>
                     </div>
                 ))}
-                <Tooltip id="dock-tooltip" place="top" className="tooltip" />
+                <Tooltip id="dock-tooltip" place="top" className="tooltip max-md:!hidden" />
             </div>
         </section>
     );

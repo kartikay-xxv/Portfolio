@@ -22,7 +22,7 @@ const WindowControls = ({ target }) => {
                 }}
             />
             <div
-                className="minimize"
+                className="minimize max-md:hidden"
                 title="Restore Original Size"
                 onClick={(e) => {
                     e.stopPropagation();
@@ -30,7 +30,7 @@ const WindowControls = ({ target }) => {
                 }}
             />
             <div
-                className="maximize"
+                className="maximize max-md:hidden"
                 title="Full Screen"
                 onClick={(e) => {
                     e.stopPropagation();

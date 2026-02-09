@@ -13,6 +13,8 @@ const WindowLayoutContext = createContext({
 
 export const useWindowLayout = () => useContext(WindowLayoutContext);
 
+const isMobileViewport = () => window.innerWidth < 768;
+
 const getMaximizedBounds = () => ({
     top: 0,
     left: 0,
@@ -72,7 +74,7 @@ const WindowWrapper = (Component, windowKey) => {
 
         const restoreWindow = useCallback(() => {
             const el = ref.current;
-            if (!el || !isOpen || !isMaximizedRef.current) return;
+            if (!el || !isOpen || !isMaximizedRef.current || isMobileViewport()) return;
 
             focusWindow(windowKey);
             gsap.killTweensOf(el);
@@ -117,7 +119,38 @@ const WindowWrapper = (Component, windowKey) => {
                 savedBoundsRef.current = null;
                 setIsMaximized(false);
                 gsap.set(el, { clearProps: "width,height" });
-                draggableRef.current?.enable();
+                if (!isMobileViewport()) draggableRef.current?.enable();
+                return;
+            }
+
+            if (isMobileViewport()) {
+                isMaximizedRef.current = true;
+                setIsMaximized(true);
+                draggableRef.current?.disable();
+
+                const bounds = getMaximizedBounds();
+                el.style.display = "flex";
+                gsap.fromTo(
+                    el,
+                    {
+                        top: bounds.top,
+                        left: bounds.left,
+                        width: bounds.width,
+                        height: bounds.height,
+                        x: 0,
+                        y: 24,
+                        xPercent: 0,
+                        yPercent: 0,
+                        scale: 1,
+                        opacity: 0,
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.22,
+                        ease: "power2.out",
+                    }
+                );
                 return;
             }
 
@@ -139,6 +172,7 @@ const WindowWrapper = (Component, windowKey) => {
             const [instance] = Draggable.create(el, {
                 onPress: () => focusWindow(windowKey),
             });
+            if (isMobileViewport()) instance?.disable();
             draggableRef.current = instance;
 
             return () => {

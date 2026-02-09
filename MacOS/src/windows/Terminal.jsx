@@ -17,7 +17,7 @@ const Terminal = () => {
                     show tech stack
                 </p>
 
-                <div className="label grid grid-cols-[16px_185px_1fr] gap-x-3 items-center text-xs">
+                <div className="label hidden sm:grid grid-cols-[16px_185px_1fr] gap-x-3 items-center text-xs">
                     <span />
                     <p>Category</p>
                     <p>Technologies</p>
@@ -27,11 +27,11 @@ const Terminal = () => {
                     {techStack.map(({ category, items }) => (
                         <li
                             key={category}
-                            className="grid grid-cols-[16px_185px_1fr] gap-x-3 items-start py-1.5 first:pt-0 last:pb-0"
+                            className="grid grid-cols-[16px_1fr] sm:grid-cols-[16px_185px_1fr] gap-x-3 gap-y-1 items-start py-2 sm:py-1.5 first:pt-0 last:pb-0"
                         >
                             <Check className="check mt-0.5 shrink-0" size={15} />
                             <h3 className="leading-snug">{category}</h3>
-                            <ul className="flex flex-wrap gap-x-1.5 gap-y-0.5">
+                            <ul className="col-start-2 sm:col-start-auto flex flex-wrap gap-x-1.5 gap-y-0.5">
                                 {items.map((item, i) => (
                                     <li key={i} className="whitespace-nowrap">
                                         {item}

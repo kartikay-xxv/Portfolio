@@ -86,9 +86,9 @@ const Navbar = () => {
                     className="px-2 py-0.5 text-[13px] font-bold text-black dark:text-white cursor-pointer rounded hover:bg-white/40 dark:hover:bg-white/15 transition-colors flex items-center justify-center gap-1.5"
                 >
                     <img src="/images/logo.svg" alt="Logo" className="size-3.5 dark:invert" />
-                    <span>Kartikay's Portfolio</span>
+                    <span>whoami</span>
                 </button>
-                <ul>
+                <ul className="max-md:hidden">
                     {navLinks.map(({ id, name, type }) => (
                     <li key={id}>
                         <button
@@ -155,7 +155,7 @@ const Navbar = () => {
                         }
 
                         return (
-                            <li key={id}>
+                            <li key={id} className={id <= 2 ? "max-sm:hidden" : undefined}>
                                 <NavIconButton
                                     src={img}
                                     alt={`icon-${id}`}

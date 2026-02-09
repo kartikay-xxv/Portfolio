@@ -16,16 +16,18 @@ const Home = () => {
     };
 
     useGSAP(() => {
-        Draggable.create(".folder");
+        if (window.innerWidth < 768) return;
+        const instances = Draggable.create(".folder");
+        return () => instances.forEach((i) => i.kill());
     }, []);
 
     return (
         <section id="home" className="pointer-events-none">
-            <ul className="flex flex-col flex-wrap content-start gap-y-3.5 gap-x-3 h-[calc(100vh-140px)] p-4 m-0 pointer-events-none">
+            <ul className="grid grid-cols-3 gap-3 p-4 m-0 sm:flex sm:flex-col sm:flex-wrap sm:content-start sm:gap-y-3.5 sm:gap-x-3 sm:h-[calc(100vh-140px)] pointer-events-none">
                 {projects.map((project) => (
                     <li
                         key={project.id}
-                        className="group folder static w-[136px] flex flex-col items-center gap-1 pointer-events-auto"
+                        className="group folder static w-full sm:w-[136px] flex flex-col items-center gap-1 pointer-events-auto"
                         onClick={() => handleOpenProjectFinder(project)}
                     >
                         <img

@@ -33,14 +33,14 @@ const Contact = () => {
                 onMouseDown={stopDrag}
                 onPointerDown={stopDrag}
             >
-                <div className="w-full flex items-center justify-between gap-6 pb-4 border-b border-gray-200 dark:border-white/10">
+                <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 pb-4 border-b border-gray-200 dark:border-white/10">
                     <img
                         src="/images/kartikay.jpg"
                         alt={profile.name}
                         className="w-[116px] h-[116px] rounded-full object-cover shrink-0 ring-2 ring-gray-200 dark:ring-white/15"
                     />
 
-                    <div className="flex-1 min-w-0 min-h-[116px] flex flex-col justify-between items-start gap-2">
+                    <div className="flex-1 w-full min-w-0 min-h-[116px] flex flex-col justify-between items-start gap-2">
                         <div className="w-full flex items-center justify-between gap-2">
                             <span className="text-[17px] font-bold text-gray-900 dark:text-gray-100 leading-snug truncate">
                                 {profile.name}
@@ -90,7 +90,7 @@ const Contact = () => {
 
                 <div className="space-y-1">
                     <h3 className="text-gray-900 dark:text-gray-100">Let's Connect</h3>
-                    <p className="text-gray-600 dark:text-gray-300">Got an idea to ship, a bug to squash, or just wanna to talk tech? I'm in.</p>
+                    <p className="text-gray-600 dark:text-gray-300">Got an idea to ship, a bug to squash, or just wanna talk tech? I'm in.</p>
                 </div>
 
                 <ul>

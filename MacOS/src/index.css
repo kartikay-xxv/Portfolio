@@ -45,26 +45,18 @@ html.dark body {
   }
 
   nav {
-    @apply flex justify-between items-center bg-white/50 dark:bg-black/45 backdrop-blur-3xl py-1 px-4 select-none transition-colors;
+    @apply flex justify-between items-center bg-white/50 dark:bg-black/45 backdrop-blur-3xl py-2 sm:py-1 px-3 sm:px-4 select-none transition-colors;
 
     > div {
-      @apply flex items-center max-sm:w-full max-sm:justify-center gap-4;
-
-      &:last-child {
-        @apply max-sm:hidden;
-      }
+      @apply flex items-center gap-3 sm:gap-4;
     }
 
     ul {
-      @apply flex items-center gap-4 max-sm:hidden;
-
-      p {
-        @apply text-xs cursor-pointer hover:underline transition-all;
-      }
+      @apply flex items-center gap-3 sm:gap-4;
     }
 
     time {
-      @apply text-xs font-medium text-black dark:text-white/95;
+      @apply text-xs font-medium text-black dark:text-white/95 max-md:hidden;
     }
   }
 }
@@ -87,10 +79,10 @@ html.dark body {
   }
 
   #dock {
-    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
+    @apply absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-w-[94vw];
 
     .dock-container {
-      @apply bg-white/20 dark:bg-black/35 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1.5 border border-white/20 dark:border-white/10;
+      @apply bg-white/20 dark:bg-black/35 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1 sm:gap-1.5 border border-white/20 dark:border-white/10;
     }
 
     .tooltip {
@@ -98,7 +90,7 @@ html.dark body {
     }
 
     .dock-icon {
-      @apply size-14 3xl:size-20 cursor-pointer;
+      @apply size-11 sm:size-14 3xl:size-20 cursor-pointer shrink-0;
 
       img {
         @apply object-cover object-center;
@@ -159,7 +151,7 @@ html.dark body {
     @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     .search {
-      @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2 dark:bg-[#2c2c2f] dark:border-white/15;
+      @apply flex items-center gap-3 w-full md:w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2 dark:bg-[#2c2c2f] dark:border-white/15;
 
       input {
         @apply placeholder:text-gray-400;
@@ -170,7 +162,7 @@ html.dark body {
       @apply bg-white p-10 max-w-3xl mx-auto dark:bg-[#1e1e20];
 
       h2 {
-        @apply text-xl font-bold text-pink-600 mb-10 dark:text-pink-400;
+        @apply text-xl font-bold text-purple-800 mb-10 dark:text-[#9333ea];
       }
 
       .blog-post {
@@ -247,7 +239,7 @@ html.dark body {
     }
 
     ul {
-      @apply grid grid-cols-4 gap-3;
+      @apply grid grid-cols-2 sm:grid-cols-4 gap-3;
 
       li {
         @apply rounded-lg p-3 w-full min-w-0 hover:-translate-y-0.5 hover:scale-105 origin-center transition-all duration-300;
@@ -267,15 +259,17 @@ html.dark body {
     @apply w-3xl max-w-[90vw] absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e20] dark:text-gray-100;
 
     .sidebar {
-      @apply w-3/12 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-5 dark:bg-[#252528] dark:border-white/10;
+      @apply w-3/12 max-md:w-full flex-none bg-gray-50 border-r max-md:border-r-0 max-md:border-b border-gray-200 flex flex-col p-5 max-md:p-3 dark:bg-[#252528] dark:border-white/10;
 
       h2 {
-        @apply text-xs font-medium text-gray-400 mb-1;
+        @apply text-xs font-medium text-gray-400 mb-1 max-md:hidden;
       }
 
       ul {
+        @apply max-md:flex max-md:overflow-x-auto max-md:gap-2;
+
         li {
-          @apply flex space-y-1 items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
+          @apply flex space-y-1 max-md:space-y-0 max-md:shrink-0 items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
 
           &:first-child {
             @apply bg-blue-100 text-blue-700;
@@ -311,14 +305,14 @@ html.dark body {
     @apply absolute w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl dark:bg-[#1e1e20] dark:text-gray-100;
 
     .sidebar {
-      @apply w-48 bg-gray-50 border-r border-gray-200 flex flex-col p-5 space-y-3 dark:bg-[#252528] dark:border-white/10;
+      @apply w-48 max-md:w-full bg-gray-50 border-r max-md:border-r-0 max-md:border-b border-gray-200 flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:gap-4 max-md:space-y-0 p-5 max-md:p-3 space-y-3 dark:bg-[#252528] dark:border-white/10;
 
       h3 {
-        @apply text-xs font-medium text-gray-400 mb-1;
+        @apply text-xs font-medium text-gray-400 mb-1 max-md:hidden;
       }
 
       ul {
-        @apply space-y-1;
+        @apply space-y-1 max-md:flex max-md:space-y-0 max-md:gap-1.5;
 
         .active {
           @apply bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400;
@@ -329,13 +323,13 @@ html.dark body {
         }
 
         li {
-          @apply flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
+          @apply flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors max-md:shrink-0;
         }
       }
     }
 
     .content {
-      @apply flex-1 grid grid-cols-3 gap-5 content-start p-6 bg-white max-w-2xl relative overflow-y-auto dark:bg-[#1e1e20];
+      @apply flex-1 grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5 content-start p-4 sm:p-6 bg-white max-w-2xl relative overflow-y-auto dark:bg-[#1e1e20];
 
       li {
         @apply static w-full flex flex-col items-center justify-start gap-2 px-2 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors dark:hover:bg-white/10;
@@ -378,7 +372,7 @@ html.dark body {
   }
 
   #home {
-    @apply relative z-0 max-sm:hidden pointer-events-none;
+    @apply relative z-0 pointer-events-none;
 
     ul {
       li {
