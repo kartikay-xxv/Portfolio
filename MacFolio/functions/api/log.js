@@ -1,11 +1,10 @@
 import {
   n,
-  escapeHtml,
   formatDuration,
   extractCfMeta,
   detectBot,
   resolveVisitorId,
-  sendTelegramMessage,
+  sendDiscordWebhook,
 } from "../_lib/analytics.js";
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
@@ -94,9 +93,11 @@ export async function onRequestPost(context) {
   const client = body.client || {};
   const { isBot, botReason } = detectBot(cfMeta, client);
   const { visitorId, idSource } = await resolveVisitorId(body.visitorId, cfMeta, client);
+  const location =
+    [cfMeta.city, cfMeta.region, cfMeta.country].filter(Boolean).join(", ") || "Unknown";
 
   // ------------------------------------------------------------------
-  // 2. INSTANT 0s VISIT LOG -> `visits` table
+  // 2. INSTANT 0s VISIT LOG -> `visits` table + Discord `#visits`
   // ------------------------------------------------------------------
   if (action === "visit") {
     try {
@@ -130,10 +131,33 @@ export async function onRequestPost(context) {
         )
         .run();
 
+      const visitId = result?.meta?.last_row_id ?? null;
+
+      const visitLines = [
+        `📍 **Location:** ${location}`,
+        `🌐 **ISP:** ${cfMeta.isp_org || "Unknown"}${cfMeta.asn ? ` (AS${cfMeta.asn})` : ""}`,
+        `💻 **Device:** ${client.browser || "?"} on ${client.os || "?"} (${client.deviceType || "desktop"})`,
+        `🖥 **Screen:** ${client.screenRes || "?"} | **Mode:** ${client.colorScheme || "?"}`,
+        client.landingPath ? `📄 **Path:** \`${client.landingPath}\`` : null,
+        client.refTag ? `🏷 **Ref Tag:** \`${client.refTag}\`` : null,
+        client.referrer ? `🔗 **Referrer:** ${client.referrer}` : null,
+        isBot ? `🤖 **Bot Reason:** \`${botReason}\`` : null,
+      ].filter(Boolean);
+
+      context.waitUntil(
+        sendDiscordWebhook(env.DISCORD_WEBHOOK_VISITS, {
+          title: isBot ? `🤖 Raw Visit #${visitId ?? "?"} (Bot)` : `🟢 Raw Visit #${visitId ?? "?"}`,
+          description: visitLines.join("\n"),
+          color: isBot ? 0x64748b : 0x22c55e,
+          footer: { text: `ID: ${visitorId} (${idSource})` },
+          timestamp: now,
+        })
+      );
+
       return new Response(
         JSON.stringify({
           ok: true,
-          visitId: result?.meta?.last_row_id ?? null,
+          visitId,
           visitorId,
           idSource,
           isBot,
@@ -149,7 +173,7 @@ export async function onRequestPost(context) {
   }
 
   // ------------------------------------------------------------------
-  // 3. DELAYED (2.5s) UNIQUE VISITOR UPSERT -> `visitors` table + Telegram
+  // 3. DELAYED (2.5s) UNIQUE VISITOR UPSERT -> `visitors` table + Discord `#visitors`
   // ------------------------------------------------------------------
   if (action === "visitor") {
     try {
@@ -220,29 +244,32 @@ export async function onRequestPost(context) {
         )
         .run();
 
-      // Send Telegram alert for human visitors only
+      // Send Discord alert to #visitors for human visitors only
       if (isBot === 0) {
-        const location = [cfMeta.city, cfMeta.region, cfMeta.country].filter(Boolean).join(", ") || "Unknown";
-        const header = isReturning
-          ? `🔁 <b>Returning Visitor (Visit #${newVisitCount})</b>`
-          : `🟢 <b>New Unique Visitor</b>`;
-
         const lines = [
-          header,
-          existing?.gmail_email ? `📧 <b>Known Gmail:</b> ${escapeHtml(existing.gmail_email)}` : null,
-          `📍 <b>Location:</b> ${escapeHtml(location)}`,
-          `🌐 <b>ISP:</b> ${escapeHtml(cfMeta.isp_org || "Unknown")}${cfMeta.asn ? ` (AS${cfMeta.asn})` : ""}`,
-          `💻 <b>Device:</b> ${escapeHtml(client.browser || "?")} on ${escapeHtml(client.os || "?")} (${escapeHtml(client.deviceType || "desktop")})`,
-          `🖥 <b>Screen:</b> ${escapeHtml(client.screenRes || "?")} | <b>Mode:</b> ${escapeHtml(client.colorScheme || "?")}`,
-          client.refTag ? `🏷 <b>Ref Tag:</b> <code>${escapeHtml(client.refTag)}</code>` : null,
-          client.referrer ? `🔗 <b>Referrer:</b> ${escapeHtml(client.referrer)}` : null,
+          existing?.gmail_email ? `📧 **Known Gmail:** \`${existing.gmail_email}\`` : null,
+          `📍 **Location:** ${location}`,
+          `🌐 **ISP:** ${cfMeta.isp_org || "Unknown"}${cfMeta.asn ? ` (AS${cfMeta.asn})` : ""}`,
+          `💻 **Device:** ${client.browser || "?"} on ${client.os || "?"} (${client.deviceType || "desktop"})`,
+          `🖥 **Screen:** ${client.screenRes || "?"} | **Mode:** ${client.colorScheme || "?"}`,
+          client.refTag ? `🏷 **Ref Tag:** \`${client.refTag}\`` : null,
+          client.referrer ? `🔗 **Referrer:** ${client.referrer}` : null,
           isReturning && existing?.total_duration_sec
-            ? `⏱ <b>Prev Time Spent:</b> ${formatDuration(existing.total_duration_sec)}`
+            ? `⏱ **Prev Time Spent:** ${formatDuration(existing.total_duration_sec)}`
             : null,
-          `🆔 <code>${escapeHtml(visitorId)}</code> (${escapeHtml(idSource)})`,
         ].filter(Boolean);
 
-        context.waitUntil(sendTelegramMessage(env, lines.join("\n")));
+        context.waitUntil(
+          sendDiscordWebhook(env.DISCORD_WEBHOOK_VISITORS, {
+            title: isReturning
+              ? `🔁 Returning Visitor (Visit #${newVisitCount})`
+              : `🟢 New Unique Visitor`,
+            description: lines.join("\n"),
+            color: isReturning ? 0x3b82f6 : 0x22c55e,
+            footer: { text: `ID: ${visitorId} (${idSource})` },
+            timestamp: now,
+          })
+        );
       }
 
       return new Response(

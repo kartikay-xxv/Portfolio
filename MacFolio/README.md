@@ -1,18 +1,21 @@
 <div align="center">
 
 <h1 align="center">
-  <img src="./public/images/macbook.png" alt="macOS" width="36" align="center" />
-  macOS Developer Portfolio
+  <img src="./public/macbook.png" alt="MacFolio" width="36" align="center" />
+  MacFolio — Interactive macOS Developer Portfolio
 </h1>
 
-An interactive, macOS-inspired desktop portfolio built with **React**, **GSAP**, **Tailwind CSS**, and **Zustand**.  
-Explore projects, skills, articles, and a downloadable resume inside draggable, stackable OS windows.
+An interactive, macOS-inspired desktop portfolio built with **React**, **GSAP**, **Tailwind CSS**, **Zustand**, **Cloudflare Pages Functions**, and **Cloudflare D1**.  
+Explore projects, skills, contact, experience, gallery, trash and a downloadable resume inside draggable, resizable OS windows -backed by real-time edge analytics, a Google OAuth Trash window trap, and live Telegram bot alerts.
 
 [![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=black)](https://gsap.com/)
 [![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge)](https://zustand-demo.pmnd.rs/)
+[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-F38020?style=for-the-badge&logo=cloudflarepages&logoColor=white)](https://pages.cloudflare.com/)
+[![Cloudflare D1](https://img.shields.io/badge/Cloudflare_D1-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/d1/)
+[![Telegram Bot](https://img.shields.io/badge/Telegram_Bot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://core.telegram.org/bots/api)
 
 [Live Demo](https://kartikay.dev) · [Report Bug](https://github.com/kartikay-xxv/Portfolio/issues)
 
@@ -20,62 +23,95 @@ Explore projects, skills, articles, and a downloadable resume inside draggable, 
 
 ---
 
-## ✨ Features
-
-- **macOS Desktop & Menu Bar** — Glassmorphic top navigation bar with quick-launch links and a live system clock powered by Day.js.
-- **Kinetic Typography Welcome Screen** — Variable font-weight hover animation where each character responds to cursor proximity via a Gaussian intensity curve in GSAP.
-- **Magnifying Dock** — Physics-based icon scaling, vertical lift, and tooltips (`react-tooltip`) mirroring the native macOS Dock.
-- **Draggable & Stackable Windows** — Every application opens inside a draggable window with dynamic `z-index` focusing and smooth GSAP transitions.
-- **Built-in Desktop Applications:**
-  - **Finder** — Multi-folder file explorer (`Work`, `About Me`, `Resume`, `Trash`) with clickable project directories, external links, and file previews.
-  - **Terminal** — CLI-styled tech stack showcase categorized by domain.
-  - **Safari** — Browser-styled developer blog and articles reader.
-  - **Resume Viewer** — In-window PDF preview and one-click download powered by `react-pdf`.
-  - **Text & Image Viewers** — Dedicated preview windows for `.txt` project briefs and `.png` screenshots.
-  - **Contact** — Quick-access social cards and email details.
-  - **Photos** — Interactive image gallery window.
-- **Draggable Desktop Shortcuts** — Project folders positioned directly on the desktop that open straight into their corresponding Finder directory.
-
----
-
-## 🏗️ Architecture Highlights
-
-- **Window Management HOC (`WindowWrapper`)** — Encapsulates GSAP `Draggable`, open/close animations, visibility toggling, and `z-index` focus in a single Higher-Order Component so individual windows stay focused on UI.
-- **Decoupled State (`Zustand` + `Immer`)** — Split into `useWindowStore` (window lifecycle, stacking order, payloads) and `useLocationStore` (Finder directory navigation that persists across window closes).
-- **Path Aliases** — Configured in `vite.config.js` and `jsconfig.json` (`#components`, `#constants`, `#store`, `#hoc`, `#windows`).
-
----
-
 ## 🛠️ Tech Stack
 
 | Category | Technologies |
 | :--- | :--- |
-| **Core** | React, Vite |
-| **Styling** | Tailwind CSS (`@tailwindcss/vite`), `clsx` |
+| **Frontend** | React, Vite, Tailwind CSS (`@tailwindcss/vite`), `clsx` |
 | **Animations & Dragging** | GSAP, `@gsap/react`, GSAP `Draggable` |
 | **State Management** | Zustand, Immer |
 | **UI & Utilities** | `lucide-react`, `react-tooltip`, `react-pdf`, `dayjs` |
+| **Backend & Database** | Cloudflare Pages Functions, Cloudflare D1 (SQLite) |
+| **Auth & Notifications** | Google OAuth (Identity Services), Telegram Bot API |
+| **Hosting & Domain** | Cloudflare Pages (Free Tier) + Custom Domain (`kartikay.dev`) |
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-MacOS/
+MacFolio/
+├── functions/
+│   ├── _lib/
+│   │   └── analytics.js    # Shared bot detection, UA/geo parsing, D1 helpers & Telegram utilities
+│   └── api/
+│       ├── log.js          # Visitor/visit logging (POST) & live unique count (GET)
+│       ├── gmail.js        # Google OAuth token verification, D1 logging & Telegram alert
+│       └── telegram.js     # Secured Telegram webhook handler (/stats, /visitors, /visits, /gmails)
 ├── public/
-│   ├── files/          # resume.pdf
-│   ├── icons/          # macOS & UI icons
-│   └── images/         # Wallpaper, dock icons, project previews
-└── src/
-    ├── components/     # Navbar, Welcome, Dock, Home, WindowControls
-    ├── constants/      # Portfolio data, projects, socials, window configs
-    ├── hoc/            # WindowWrapper HOC (GSAP Draggable + focus logic)
-    ├── store/          # Zustand stores (window.js, location.js)
-    ├── windows/        # Resume, Finder, Text, Image, Terminal, Contact, Safari, Photos
-    ├── App.jsx
-    ├── index.css
-    └── main.jsx
+│   ├── files/              # resume.pdf
+│   ├── icons/              # macOS & UI icons
+│   └── images/             # Light/dark wallpapers, dock icons, project previews, gallery
+├── src/
+│   ├── components/         # Navbar, Welcome, Dock, Home, WindowControls
+│   ├── constants/          # Portfolio data, projects, socials, nav/dock/window configs
+│   ├── hoc/                # WindowWrapper HOC (GSAP Draggable, focus & window controls)
+│   ├── store/              # Zustand stores (window.js, location.js, theme.js)
+│   ├── windows/            # Finder, Resume, Text, Image, Terminal, Contact, Safari, Photos, Trash
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── index.html
+├── package.json
+└── vite.config.js
 ```
+
+---
+
+## ✨ Features
+
+### Desktop, Menu Bar & Theme
+- **Fully Functional Menu Bar** — Every navbar item is wired to an action:
+  - **`whoami`** brand button resets/reloads the desktop.
+  - **Navigation Links** act as interactive window-toggle buttons.
+  - **Wi-Fi Icon** opens a live **Unique Visitors** popover powered by `/api/log` and Cloudflare D1.
+  - **Search Icon** launches Finder directly.
+  - **Contact Icon** toggles the Contact window.
+  - **Appearance Icon** switches between **Light**, **Dark**, and **System** themes (`useThemeStore`) with smooth wallpaper and UI transitions.
+  - **Live System Clock** powered by Day.js.
+- **Mobile Responsive** — Adapts seamlessly to mobile and tablet viewports with accessible navbar icons, inward-aligned popovers, responsive dock sizing, and touch-friendly window layouts.
+- **Kinetic Typography Welcome Screen** — Variable font-weight hover animation where each character responds to cursor proximity via a Gaussian intensity curve in GSAP.
+- **Magnifying Dock** — Physics-based icon scaling, vertical lift, and tooltips (`react-tooltip`) mirroring the native macOS Dock.
+
+### Window Management & Built-in Apps
+- **Working Traffic-Light Window Controls** — All three macOS controls (**Close**, **Minimize**, and **Maximize**) work across every window with dynamic `z-index` focusing and GSAP transitions.
+- **Improved Dock & Desktop Applications:**
+  - **Finder** — Multi-folder file explorer (`Work`, `About Me`, `Resume`, `Trash`) with clickable project directories, external links, and file previews.
+  - **Resume, Text & Image Viewers** — In-window PDF preview (`react-pdf`) with one-click download, plus dedicated `.txt` and `.png` preview windows.
+  - **Terminal** — CLI-styled tech stack showcase categorized by domain.
+  - **Contact** — Quick-access social cards and email details.
+  - **Safari** — Browser-styled developer's experience related information.
+  - **Photos** — Interactive image gallery window with responsive sidebar navigation.
+- **Interactive Trash Window (Google OAuth Trap)** — Styled as a retro hacker/terminal prank window integrated with **Google Sign-In (OAuth)**. Signing in unlocks the prank screen, persists the session across refreshes, logs the Google profile to Cloudflare D1, and triggers a real-time Telegram notification (tracking both first-time captures and returning logins).
+
+### Edge Analytics (Cloudflare D1) & Telegram Bot
+- **Cloudflare D1 Database (`portfolio-logs`)** — Serverless SQLite logging via Cloudflare Pages Functions across three indexed tables:
+  - `visits` — Raw visit logs with referral/UTM tags (`?ref=...`), duration, bot filtering, geo/ISP metadata, and device/screen info.
+  - `visitors` — Deduplicated unique visitor profiles (`visitor_id`), visit counts, first/last seen timestamps, and linked Gmail accounts.
+  - `gmail_users` — Captured Google OAuth profiles (`google_sub`, email, name, login count, and visitor context).
+- **Smart Deduplication** — Delayed visitor upsertion and refresh deduplication prevent duplicate alerts on page reloads.
+- **Live Telegram Notifications & Bot Commands** — Secured via `secret_token` webhook authentication (`/api/telegram`):
+  - Instant pings for **New Unique Visitors** and **New / Returning Gmail Captures**.
+  - On-demand database queries directly from Telegram: `/stats`, `/visitors`, `/visits`, and `/gmails`.
+
+---
+
+## 🏗️ Architecture Highlights
+
+- **Window Management HOC (`WindowWrapper`)** — Encapsulates GSAP `Draggable`, open/close/minimize/maximize behavior, and `z-index` focus in a single Higher-Order Component.
+- **Decoupled State (`Zustand` + `Immer`)** — Modular stores for window lifecycle (`window.js`), Finder directory state (`location.js`), and Light/Dark/System theme persistence (`theme.js`).
+- **Edge Full-Stack on Cloudflare Pages** — Zero-cost deployment & hosting both the Vite React frontend and `/api/*` Cloudflare Pages Functions, bound directly to Cloudflare D1 and linked to a custom domain (`kartikay.dev`).
+- **Path Aliases** — Configured in `vite.config.js` and `jsconfig.json` (`#components`, `#constants`, `#store`, `#hoc`, `#windows`).
 
 ---
 
@@ -84,13 +120,14 @@ MacOS/
 ### Prerequisites
 - **Node.js** (v18+ recommended)
 - **npm**
+- A **Cloudflare** account (for Pages + D1) and a **Telegram Bot** token (optional for local UI-only development)
 
 ### Local Setup
 
 1. **Clone the repository**
    ```bash
    git clone [https://github.com/kartikay-xxv/Portfolio.git](https://github.com/kartikay-xxv/Portfolio.git)
-   cd Portfolio/MacOS
+   cd Portfolio/MacFolio
    ```
 
 2. **Install dependencies**
@@ -98,23 +135,55 @@ MacOS/
    npm install
    ```
 
-3. **Start the development server**
+3. **Configure environment variables**
+   Create a `.env` file in `MacFolio/` for frontend variables:
+   ```env
+   VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
+   ```
+
+4. **Start the development server**
    ```bash
    npm run dev
    ```
    Open `http://localhost:5173` in your browser.
 
-4. **Build for production**
+5. **Build for production**
    ```bash
    npm run build
    ```
 
 ---
 
+## ☁️ Deployment (Cloudflare Pages + D1 + Telegram)
+
+1. **Cloudflare Pages Build Settings**
+   - **Root directory:** `MacFolio`
+   - **Build command:** `npm run build`
+   - **Build output directory:** `dist`
+
+2. **D1 Database & Binding**
+   - Create a D1 database (`portfolio-logs`) and initialize the `visits`, `visitors`, and `gmail_users` tables.
+   - Bind the database to your Pages project under **Settings → Bindings** with variable name **`DB`**.
+
+3. **Environment Variables & Secrets (Production)**
+   - `VITE_GOOGLE_CLIENT_ID` — Google OAuth Client ID (Text)
+   - `TELEGRAM_BOT_TOKEN` — Token from `@BotFather` (Secret)
+   - `TELEGRAM_CHAT_ID` — Your numeric Telegram Chat ID from @userinfobot (Secret)
+   - `TELEGRAM_WEBHOOK_SECRET` — Custom secret token for webhook validation (Secret)
+
+4. **Register Telegram Webhook**
+   ```text
+   [https://api.telegram.org/bot](https://api.telegram.org/bot)<YOUR_BOT_TOKEN>/setWebhook?url=[https://kartikay.dev/api/telegram&secret_token=](https://kartikay.dev/api/telegram&secret_token=)<YOUR_WEBHOOK_SECRET>
+   ```
+
+5. **Custom Domain**
+   - Connect your custom domain under **Cloudflare Pages → Custom domains** for automatic SSL and global edge delivery.
+
+---
+
 ## 🎨 Customization
 
 - **Projects, Skills, Blogs & Socials:** Edit `src/constants/index.js`.
+- **Wallpapers & Icons:** Replace assets inside `public/images/` (`wallpaper-light.jpg`, `wallpaper-dark.jpg`, etc.).
 - **Resume:** Replace `public/files/resume.pdf` with your own PDF.
 - **Branding & Metadata:** Update the page title and favicon in `index.html`.
-
-> **Note:** Designed for desktop and tablet viewports to preserve the windowed OS experience.

@@ -26,13 +26,6 @@ export function n(val) {
   return val === undefined || val === "" ? null : val;
 }
 
-export function escapeHtml(str) {
-  return String(str ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
 export function formatDuration(totalSec) {
   const sec = Math.max(0, Math.round(Number(totalSec) || 0));
   if (sec < 60) return `${sec}s`;
@@ -42,6 +35,22 @@ export function formatDuration(totalSec) {
   const h = Math.floor(m / 60);
   const rm = m % 60;
   return `${h}h ${rm}m`;
+}
+
+export function shortTime(iso) {
+  if (!iso) return "?";
+  try {
+    return new Date(iso).toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      day: "2-digit",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  } catch {
+    return String(iso).slice(0, 16);
+  }
 }
 
 export function extractCfMeta(request) {
@@ -89,7 +98,6 @@ export function detectBot(cfMeta, client = {}) {
     reasons.push("webdriver");
   }
 
-  // Headless signature: viewport larger than reported screen (e.g., 1366x768 inside 800x600)
   if (
     client.screenWidth > 0 &&
     client.viewportWidth > 0 &&
@@ -98,7 +106,6 @@ export function detectBot(cfMeta, client = {}) {
     reasons.push("viewport_gt_screen");
   }
 
-  // Missing UA completely
   if (!cfMeta.user_agent) {
     reasons.push("empty_ua");
   }
@@ -118,7 +125,6 @@ export async function resolveVisitorId(clientVisitorId, cfMeta, client = {}) {
     return { visitorId: clientVisitorId, idSource: "localStorage" };
   }
 
-  // Bulletproof fallback when localStorage is blocked: hash(ip + os + browser)
   const seed = `${cfMeta.ip || "noip"}|${client.os || "noos"}|${client.browser || "nobrowser"}`;
   const digest = await crypto.subtle.digest(
     "SHA-256",
@@ -132,26 +138,51 @@ export async function resolveVisitorId(clientVisitorId, cfMeta, client = {}) {
   return { visitorId: `fb_${hashHex}`, idSource: "fallback_hash" };
 }
 
-export async function sendTelegramMessage(env, htmlText, chatIdOverride = null) {
-  const token = env?.TELEGRAM_BOT_TOKEN;
-  const chatId = chatIdOverride || env?.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
-
-  const safeText =
-    htmlText.length > 4000 ? `${htmlText.slice(0, 3980)}\n\n<i>...(truncated)</i>` : htmlText;
+export async function sendDiscordWebhook(webhookUrl, embed) {
+  if (!webhookUrl) return;
 
   try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: safeText,
-        parse_mode: "HTML",
-        disable_web_page_preview: true,
-      }),
+      body: JSON.stringify({ embeds: [embed] }),
     });
   } catch {
-    // Never break logging if Telegram is temporarily unreachable
+    // Never break logging if Discord is temporarily unreachable
+  }
+}
+
+function hexToBytes(hex) {
+  if (!hex || hex.length % 2 !== 0 || !/^[0-9a-fA-F]+$/.test(hex)) {
+    return null;
+  }
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < hex.length; i += 2) {
+    bytes[i / 2] = parseInt(hex.slice(i, i + 2), 16);
+  }
+  return bytes;
+}
+
+export async function verifyDiscordSignature(request, rawBody, publicKeyHex) {
+  const signatureHex = request.headers.get("X-Signature-Ed25519");
+  const timestamp = request.headers.get("X-Signature-Timestamp");
+  if (!signatureHex || !timestamp || !publicKeyHex) return false;
+
+  const publicKeyBytes = hexToBytes(publicKeyHex);
+  const signatureBytes = hexToBytes(signatureHex);
+  if (!publicKeyBytes || !signatureBytes) return false;
+
+  try {
+    const key = await crypto.subtle.importKey(
+      "raw",
+      publicKeyBytes,
+      { name: "Ed25519" },
+      false,
+      ["verify"]
+    );
+    const message = new TextEncoder().encode(timestamp + rawBody);
+    return await crypto.subtle.verify("Ed25519", key, signatureBytes, message);
+  } catch {
+    return false;
   }
 }
