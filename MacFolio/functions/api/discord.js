@@ -91,16 +91,19 @@ export async function onRequestPost({ request, env }) {
   }
 
   // 4. Optional security locks (User ID + #commands Channel ID)
-  const userId = interaction.member?.user?.id || interaction.user?.id;
-  if (
-    env.DISCORD_USER_ID &&
-    String(userId) !== String(env.DISCORD_ALLOWED_USER_ID)
-  ) {
-    return jsonResponse({
-      type: 4,
-      data: { content: "⛔ Unauthorized user.", flags: 64 },
-    });
-  }
+const userId = interaction.member?.user?.id || interaction.user?.id;
+if (
+  env.DISCORD_USER_ID &&
+  String(userId).trim() !== String(env.DISCORD_USER_ID).trim()
+) {
+  return jsonResponse({
+    type: 4,
+    data: {
+      content: `⛔ Unauthorized user. Discord sent: \`${userId}\``,
+      flags: 64,
+    },
+  });
+}
 
   if (
     env.DISCORD_COMMANDS_CHANNEL_ID &&
