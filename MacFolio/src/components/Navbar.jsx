@@ -149,7 +149,7 @@ const Navbar = () => {
 
                         if (isWifiIcon) {
                             return (
-                                <li key={id} ref={wifiMenuRef} className="relative max-sm:hidden">
+                                <li key={id} ref={wifiMenuRef} className="relative">
                                     <NavIconButton
                                         src={img}
                                         alt="Visitors"
@@ -185,7 +185,7 @@ const Navbar = () => {
 
                         if (isSearchIcon) {
                             return (
-                                <li key={id} className="max-sm:hidden">
+                                <li key={id}>
                                     <NavIconButton
                                         src={img}
                                         alt="Search"
@@ -246,7 +246,7 @@ const Navbar = () => {
                         }
 
                         return (
-                            <li key={id} className={id <= 2 ? "max-sm:hidden" : undefined}>
+                            <li key={id}>
                                 <NavIconButton
                                     src={img}
                                     alt={`icon-${id}`}

@@ -389,3 +389,43 @@ html.dark body {
     }
   }
 }
+
+@layer components {
+  #trash {
+    @apply w-[430px] max-w-[92vw] absolute top-24 left-1/2 -translate-x-1/2 rounded-xl overflow-hidden bg-[#f8faf9] text-slate-900 border border-emerald-700/35 shadow-[0_20px_50px_rgba(6,78,59,0.16)] dark:bg-[#050806] dark:text-[#00ff41] dark:border-[#00ff41]/60 dark:shadow-[0_0_32px_rgba(0,255,65,0.18)];
+
+    #window-header {
+      @apply bg-[#edf5f0] border-b border-emerald-700/20 text-emerald-900 dark:bg-[#070d09] dark:border-[#00ff41]/30 dark:text-[#00ff41];
+    }
+
+    h2 {
+      @apply font-bold text-xs tracking-wide text-center w-full;
+    }
+
+    .trash-body {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(4, 120, 87, 0.35) transparent;
+    }
+
+    .trash-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .trash-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .trash-body::-webkit-scrollbar-thumb {
+      background: rgba(4, 120, 87, 0.35);
+      border-radius: 9999px;
+    }
+  }
+
+  .dark #trash .trash-body {
+    scrollbar-color: rgba(0, 255, 65, 0.35) transparent;
+  }
+
+  .dark #trash .trash-body::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 65, 0.35);
+  }
+}

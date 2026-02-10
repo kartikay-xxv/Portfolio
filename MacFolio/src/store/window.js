@@ -4,7 +4,10 @@ import { INITIAL_Z_INDEX, WINDOW_CONFIG } from "#constants/index.js";
 
 const useWindowStore = create(
     immer( (set) => ( {
-        windows: WINDOW_CONFIG,
+        windows: {
+            ...WINDOW_CONFIG,
+            trash: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+        },
         nextZIndex: INITIAL_Z_INDEX + 1,
 
         openWindow: (windowKey, data = null) =>
@@ -16,7 +19,7 @@ const useWindowStore = create(
                 win.data = data ?? win.data;
                 state.nextZIndex++;
             } ),
-        closeWindow: (windowKey) => 
+        closeWindow: (windowKey) =>
             set( (state) => {
                 const win = state.windows[windowKey];
                 if (!win) return;
@@ -24,7 +27,7 @@ const useWindowStore = create(
                 win.zIndex = INITIAL_Z_INDEX;
                 win.data = null;
             } ),
-        focusWindow: (windowKey) => 
+        focusWindow: (windowKey) =>
             set( (state) => {
                 const win = state.windows[windowKey];
                 if (!win) return;

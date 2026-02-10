@@ -177,7 +177,7 @@ const socials = [
   id: 1,
   text: "Gmail",
   icon: "/icons/gmail.svg",
-  bg: "#EA4335",
+  bg: "#4F46E5",
   link: "https://mail.google.com/mail/?view=cm&to=kartikay.workspace@gmail.com",
   },
   {
@@ -210,7 +210,7 @@ const socials = [
   },
   {
     id: 6,
-    text: "Twitter/X",
+    text: "X/Twitter",
     icon: "/icons/twitter.svg",
     bg: "#000000",
     link: "https://x.com/kartikay_xxv",
