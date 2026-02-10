@@ -178,7 +178,7 @@ export async function onRequestPost(context) {
   if (action === "visitor") {
     try {
       const existing = await env.DB.prepare(
-        "SELECT id, visit_count, total_duration_sec, gmail_email FROM visitors WHERE visitor_id = ?"
+        "SELECT id, unique_visitor_no, visit_count, total_duration_sec, gmail_email FROM visitors WHERE visitor_id = ?"
       )
         .bind(visitorId)
         .first();
@@ -186,9 +186,31 @@ export async function onRequestPost(context) {
       const isReturning = Boolean(existing);
       const newVisitCount = isReturning ? Number(existing.visit_count || 0) + 1 : 1;
 
+      // Assign permanent sequential Unique Visitor No. for human visitors
+      let uniqueVisitorNo = existing?.unique_visitor_no ?? null;
+      if (isBot === 0 && uniqueVisitorNo === null) {
+        const maxRow = await env.DB.prepare(
+          "SELECT COALESCE(MAX(unique_visitor_no), 0) AS maxNo FROM visitors"
+        ).first();
+        uniqueVisitorNo = Number(maxRow?.maxNo ?? 0) + 1;
+      }
+
+      // Fetch most recent previous visit's duration (OFFSET 1 skips current 0s visit row)
+      let prevVisitSec = 0;
+      if (isBot === 0 && isReturning) {
+        const prevVisit = await env.DB.prepare(
+          "SELECT duration_sec FROM visits WHERE visitor_id = ? ORDER BY id DESC LIMIT 1 OFFSET 1"
+        )
+          .bind(visitorId)
+          .first();
+        prevVisitSec = Number(prevVisit?.duration_sec ?? 0);
+      }
+
+      const totalDurationSec = Number(existing?.total_duration_sec ?? 0);
+
       await env.DB.prepare(`
         INSERT INTO visitors (
-          visitor_id, id_source, is_bot, bot_reason, visit_count, total_duration_sec,
+          visitor_id, unique_visitor_no, id_source, is_bot, bot_reason, visit_count, total_duration_sec,
           first_seen, last_seen,
           first_ref_tag, last_ref_tag, first_referrer, last_referrer, last_landing_path,
           first_ip, last_ip, isp_org, asn, continent, country, region, city, postal_code,
@@ -197,7 +219,7 @@ export async function onRequestPost(context) {
           language, languages, client_timezone, cpu_cores, device_memory,
           connection_type, color_scheme, user_agent
         ) VALUES (
-          ?, ?, ?, ?, 1, 0,
+          ?, ?, ?, ?, ?, 1, 0,
           ?, ?,
           ?, ?, ?, ?, ?,
           ?, ?, ?, ?, ?, ?, ?, ?, ?,
@@ -207,6 +229,7 @@ export async function onRequestPost(context) {
           ?, ?, ?
         )
         ON CONFLICT(visitor_id) DO UPDATE SET
+          unique_visitor_no = COALESCE(visitors.unique_visitor_no, excluded.unique_visitor_no),
           visit_count = visitors.visit_count + 1,
           last_seen = excluded.last_seen,
           is_bot = CASE WHEN visitors.is_bot = 1 OR excluded.is_bot = 1 THEN 1 ELSE 0 END,
@@ -233,7 +256,7 @@ export async function onRequestPost(context) {
           user_agent = COALESCE(excluded.user_agent, visitors.user_agent)
       `)
         .bind(
-          visitorId, idSource, isBot, n(botReason),
+          visitorId, uniqueVisitorNo, idSource, isBot, n(botReason),
           now, now,
           n(client.refTag), n(client.refTag), n(client.referrer), n(client.referrer), n(client.landingPath),
           n(cfMeta.ip), n(cfMeta.ip), n(cfMeta.isp_org), n(cfMeta.asn), n(cfMeta.continent), n(cfMeta.country), n(cfMeta.region), n(cfMeta.city), n(cfMeta.postal_code),
@@ -247,6 +270,7 @@ export async function onRequestPost(context) {
       // Send Discord alert to #visitors for human visitors only
       if (isBot === 0) {
         const lines = [
+          `🆔 **Unique Visitor No. -** ${uniqueVisitorNo}`,
           existing?.gmail_email ? `📧 **Known Gmail:** \`${existing.gmail_email}\`` : null,
           `📍 **Location:** ${location}`,
           `🌐 **ISP:** ${cfMeta.isp_org || "Unknown"}${cfMeta.asn ? ` (AS${cfMeta.asn})` : ""}`,
@@ -254,9 +278,8 @@ export async function onRequestPost(context) {
           `🖥 **Screen:** ${client.screenRes || "?"} | **Mode:** ${client.colorScheme || "?"}`,
           client.refTag ? `🏷 **Ref Tag:** \`${client.refTag}\`` : null,
           client.referrer ? `🔗 **Referrer:** ${client.referrer}` : null,
-          isReturning && existing?.total_duration_sec
-            ? `⏱ **Prev Time Spent:** ${formatDuration(existing.total_duration_sec)}`
-            : null,
+          isReturning ? `⏱ **Prev Time Spent:** ${formatDuration(prevVisitSec)}` : null,
+          isReturning ? `⏳ **Total Time Spent:** ${formatDuration(totalDurationSec)}` : null,
         ].filter(Boolean);
 
         context.waitUntil(
@@ -273,7 +296,14 @@ export async function onRequestPost(context) {
       }
 
       return new Response(
-        JSON.stringify({ ok: true, visitorId, isReturning, visitCount: newVisitCount, isBot }),
+        JSON.stringify({
+          ok: true,
+          visitorId,
+          uniqueVisitorNo,
+          isReturning,
+          visitCount: newVisitCount,
+          isBot,
+        }),
         { status: 200, headers: JSON_HEADERS }
       );
     } catch (err) {

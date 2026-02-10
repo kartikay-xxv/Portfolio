@@ -84,7 +84,7 @@ export async function onRequestPost(context) {
     const isReturning = Boolean(existing);
     const loginCount = isReturning ? Number(existing.login_count || 0) + 1 : 1;
 
-    await env.DB.prepare(`
+    const insertRes = await env.DB.prepare(`
       INSERT INTO gmail_users (
         google_sub, email, email_verified, name, given_name, family_name,
         picture, hosted_domain, google_locale,
@@ -162,6 +162,10 @@ export async function onRequestPost(context) {
       )
       .run();
 
+    const uniqueGmailNo = isReturning
+      ? existing.id
+      : (insertRes?.meta?.last_row_id ?? "?");
+
     await env.DB.prepare(
       "UPDATE visitors SET gmail_email = ? WHERE visitor_id = ?"
     )
@@ -172,6 +176,7 @@ export async function onRequestPost(context) {
       [cfMeta.city, cfMeta.region, cfMeta.country].filter(Boolean).join(", ") || "Unknown";
 
     const lines = [
+      `🆔 **Unique Gmail No. -** ${uniqueGmailNo}`,
       `👤 **Name:** ${payload.name || "Unknown"}`,
       `📧 **Email:** \`${email}\``,
       payload.hd ? `🏢 **Org Domain:** ${payload.hd}` : null,
@@ -198,7 +203,7 @@ export async function onRequestPost(context) {
     context.waitUntil(sendDiscordWebhook(env.DISCORD_WEBHOOK_GMAIL, embed));
 
     return new Response(
-      JSON.stringify({ ok: true, loginCount, isReturning }),
+      JSON.stringify({ ok: true, uniqueGmailNo, loginCount, isReturning }),
       { status: 200, headers: JSON_HEADERS }
     );
   } catch (err) {
